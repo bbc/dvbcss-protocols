@@ -171,7 +171,7 @@ Example: (with explanatory comments that must be removed for it to be valid JSON
         "v":    0,              /* version = 0 */
         "t":    2,              /* type = response with follow-up planned */
         "p":    0.0001,         /* server clock has 0.1 millisecond precision */
-        "mfe":  50.             /* server clock max freq error = 50 ppm */
+        "mfe":  50,             /* server clock max freq error = 50 ppm */
         "otvs": 19346582,       /* client request sent at 19346582.9826511 seconds */
         "otvn": 982651100,      
         "rt":   29784724.1927,  /* server received request at 29784724.1927 seconds */
