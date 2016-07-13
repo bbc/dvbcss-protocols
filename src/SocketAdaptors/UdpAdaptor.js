@@ -44,9 +44,9 @@ var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
      * Force this adaptor to stop. Also calls the stop() method of the protocol handlers
      */
     this.stop = function() {
-        boundDgramSocket.off("close", handlers.close);
-        boundDgramSocket.off("message", handlers.message);
-        protocolHandler.off("send", send);
+        boundDgramSocket.removeListener("close", handlers.close);
+        boundDgramSocket.removeListener("message", handlers.message);
+        protocolHandler.removeListener("send", send);
         protocolHandler.stop();
     };
 

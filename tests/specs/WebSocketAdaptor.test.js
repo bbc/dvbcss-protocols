@@ -127,5 +127,37 @@ describe("WebSocketAdaptor", function() {
         
         protocol.emit("send", payload, null);
         expect(ws.send).toHaveBeenCalledWith(payload);
-    })
+    });
+    
+    it("ignores an open event on the websocket after stop() is called, and therefore does not call start() on the protocol handler", function() {
+        ws.readyState = ws.CONNECTING;
+        var wsa = new WebSocketAdaptor(protocol, ws);
+        wsa.stop();
+        ws.readyState = ws.OPEN;
+        ws.triggerEvent("open", {});
+        expect(protocol.start).not.toHaveBeenCalled();
+    });
+
+    it("ignores a received message on the websocket after stop() is called, and therefore does not call handleMessage() on the protocol handler", function() {
+        var payload="flrob";
+        
+        ws.readyState = ws.OPEN;
+        var wsa = new WebSocketAdaptor(protocol, ws);
+        wsa.stop();
+        var event ={ data:payload, origin:ws.url };
+        ws.triggerEvent("message", event);
+        expect(protocol.handleMessage).not.toHaveBeenCalled();
+    });
+
+    it("calls stop() on the protocol handler when stop() is called, but ignores a close event on the websocket after stop() is called, and therefore does not call stop() on the protocol handler", function() {
+        var payload="flrob";
+        
+        ws.readyState = ws.OPEN;
+        var wsa = new WebSocketAdaptor(protocol, ws);
+        wsa.stop();
+        expect(protocol.stop).toHaveBeenCalled();
+        protocol.stop.calls.reset();
+        ws.triggerEvent("close", {});
+        expect(protocol.stop).not.toHaveBeenCalled();
+    });
 });

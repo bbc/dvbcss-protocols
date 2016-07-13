@@ -54,7 +54,7 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
         webSocket.removeEventListener("open",    handlers.open);
         webSocket.removeEventListener("close",   handlers.close);
         webSocket.removeEventListener("message", handlers.message);
-        protocolHandler.off("send", send);
+        protocolHandler.removeListener("send", send);
         protocolHandler.stop();
     };
 
