@@ -12,15 +12,12 @@ First download and then install dependencies:
     $ cd sync-protocols
     $ npm install
 
-Note that "npm install" will not succeed fully. This library depends on the
-`dvbcss-clocks` library which needs to be downloaded separately and linked
-using `npm link`:
+Note that NPM install might fail if NPM is not able to access your credentials for the
+project repository.
 
-    $ cd dvbcss-clocks
-    $ sudo npm link
-
-    $ cd ../sync-protocols
-    $ npm link dvbcss-clocks
+(NPM 'link' is no longer required for project private packages. This is
+because the dependency entry in package.json now points directly to the 
+repository URL)
 
 
 ### 2. EITHER: Build for the browser
@@ -61,12 +58,14 @@ JSDoc documentation can be built:
     $ grunt jsdoc
 
 Documentation is generated and output as HTML into the `doc` subfolder.
+
     
 ## Unit tests
 
 Unit tests are written using the jasmine unit test framework.
 
     $ grunt test
+
 
 ## Simple example
 
