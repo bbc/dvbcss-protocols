@@ -1,0 +1,16 @@
+# svn
+.svn
+
+# Mac OS X
+.DS_STORE
+.DS_Store
+
+# build/packaging/dependencies
+build/
+dist/
+sdist/
+node_modules/
+doc/
+.grunt/
+*~
+**/*~
