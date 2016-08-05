@@ -17,11 +17,10 @@ var PresentationTimestamps = function(earliest, latest, actual) {
   this.latest     = latest;
   this.actual     = actual;
 
-  if (this.earliest instanceof PresentationTimestamp ||
-      this.latest instanceof PresentationTimestamp ||
-     (this.actual instanceof PresentationTimestamp || this.actual !== undefined))
+  if (!(this.earliest instanceof PresentationTimestamp && this.latest instanceof PresentationTimestamp &&
+     (this.actual instanceof PresentationTimestamp || this.actual !== undefined)))
   {
-    throw new Exception("Invalid parameters.");
+    throw ("Invalid parameters: " + (this.earliest instanceof PresentationTimestamp));
   }
 }
 
@@ -29,7 +28,7 @@ var PresentationTimestamps = function(earliest, latest, actual) {
  * @returns {string} string representation of the PresentationTimestamps as defined by ETSI TS XXX XXX clause 5.7.4
  */
 PresentationTimestamps.prototype.serialise = function () {
-  return JSON.serialise(this);
+  return JSON.stringify(this);
 }
 
 /**
@@ -45,4 +44,4 @@ PresentationTimestamps.deserialise = function (jsonVal) {
   );
 }
 
-module.exports.PresentationTimestamps = PresentationTimestamps;
+module.exports = PresentationTimestamps;

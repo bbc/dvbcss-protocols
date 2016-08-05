@@ -16,6 +16,13 @@ var ControlTimestamp = function(contentTime, wallClockTime, timelineSpeedMultipl
   this.contentTime = (contentTime !== null) ? Number(contentTime) : null;
   this.wallClockTime = Number(wallClockTime);
   this.timelineSpeedMultiplier = (timelineSpeedMultiplier !== null) ? Number(timelineSpeedMultiplier) : null;
+
+  if (!((Number.NaN !== this.contentTime && Number.NaN !== this.timelineSpeedMultiplier) ||
+        (this.contentTime === null && this.timelineSpeedMultiplier === null)) &&
+        (Number.isInteger(this.wallClockTime)))
+  {
+    throw "Invalid parameters";
+  }
 }
 
 /**
@@ -44,4 +51,4 @@ ControlTimestamp.deserialise = function (jsonVal) {
   );
 }
 
-module.exports.ControlTimestamp = ControlTimestamp;
+module.exports = ControlTimestamp;

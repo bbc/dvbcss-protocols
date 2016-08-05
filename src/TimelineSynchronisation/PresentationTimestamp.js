@@ -15,7 +15,7 @@ var PresentationTimestamp = function(contentTime, wallClockTime) {
 
   if (isNaN(this.contentTime) || isNaN(this.wallClockTime))
   {
-    throw new Exception("Invalid parameters: not a number.");
+    throw "Invalid parameters: not a number.";
   }
 }
 
@@ -27,4 +27,4 @@ PresentationTimestamp.getFromObj = function (o) {
   return new PresentationTimestamp(o.contentTime, o.wallClockTime);
 }
 
-module.exports.PresentationTimestamp = PresentationTimestamp;
+module.exports = PresentationTimestamp;

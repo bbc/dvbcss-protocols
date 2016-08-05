@@ -22,10 +22,21 @@ describe("PresentationTimestamps", function() {
       expect(ts_before.latest.wallClockTime).toBe(ts_after.latest.wallClockTime);
 
     });
+});
 
-    it ("check if ControlTimestamp can be created", function() {
+describe("ControlTimestamp", function() {
 
-      var cts = new ControlTimestamp();
+    it ("check if ControlTimestamp can be created, serialised and deserialed.", function() {
+
+      var cts_before = new ControlTimestamp(1, 2, 0.5);
+      var cts_after  = ControlTimestamp.deserialise(cts_before.serialise());
+
+      expect(cts_before).toBeDefined();
+      expect(cts_after).toBeDefined();
+
+      expect(cts_before.contentTime).toBe(cts_after.contentTime);
+      expect(cts_before.wallClockTime).toBe(cts_after.wallClockTime);
+      expect(cts_before.timelineSpeedMultiplier).toBe(cts_after.timelineSpeedMultiplier);
 
     });
 
