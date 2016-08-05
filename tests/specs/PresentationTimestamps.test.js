@@ -1,4 +1,6 @@
+var PresentationTimestamp  = require("main_node").TimelineSynchronisation.PresentationTimestamp;
 var PresentationTimestamps = require("main_node").TimelineSynchronisation.PresentationTimestamps;
+var ControlTimestamp = require("main_node").TimelineSynchronisation.ControlTimestamp;
 
 describe("PresentationTimestamps", function() {
     it("exists", function() {
@@ -20,5 +22,12 @@ describe("PresentationTimestamps", function() {
       expect(ts_before.latest.wallClockTime).toBe(ts_after.latest.wallClockTime);
 
     });
+
+    it ("check if ControlTimestamp can be created", function() {
+
+      var cts = new ControlTimestamp();
+
+    });
+
 
 });
