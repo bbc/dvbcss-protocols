@@ -20,7 +20,7 @@ var PresentationTimestamps = function(earliest, latest, actual) {
   if (!(this.earliest instanceof PresentationTimestamp && this.latest instanceof PresentationTimestamp &&
      (this.actual instanceof PresentationTimestamp || this.actual !== undefined)))
   {
-    throw ("Invalid parameters: " + (this.earliest instanceof PresentationTimestamp));
+    throw ("PresentationTimestamps(): Invalid parameters.");
   }
 }
 

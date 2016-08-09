@@ -15,7 +15,7 @@ var PresentationTimestamp = function(contentTime, wallClockTime) {
 
   if (isNaN(this.contentTime) || isNaN(this.wallClockTime))
   {
-    throw "Invalid parameters: not a number.";
+    throw "PresentationTimestamp(): Invalid parameters: not a number.";
   }
 }
 

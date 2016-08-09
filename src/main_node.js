@@ -31,9 +31,10 @@ module.exports = {
     * @see  module:sync-protocols/TimelineSynchronisation
     */
     TimelineSynchronisation : {
-      PresentationTimestamps : require ("./TimelineSynchronisation/PresentationTimestamps"),
-      PresentationTimestamp :  require ("./TimelineSynchronisation/PresentationTimestamp"),
-      ControlTimestamp :       require ("./TimelineSynchronisation/ControlTimestamp")
+      PresentationTimestamps :       require ("./TimelineSynchronisation/PresentationTimestamps"),
+      PresentationTimestamp :        require ("./TimelineSynchronisation/PresentationTimestamp"),
+      ControlTimestamp :             require ("./TimelineSynchronisation/ControlTimestamp"),
+      TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage")
     },
 
 
