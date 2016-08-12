@@ -54,7 +54,7 @@ function TSClientProtocol (syncTLClock, options) {
   // the tickrate of the timeline in ticks per seconds
   priv.tickrate = options.tickrate;
 
-  priv.syncTLClock.setAvailability(false);
+  priv.syncTLClock.setAvailabilityFlag(false);
 }
 
 inherits(TSClientProtocol, events.EventEmitter);
@@ -73,7 +73,7 @@ TSClientProtocol.prototype.start = function() {
 TSClientProtocol.prototype.stop = function() {
   var priv = PRIVATE.get(this);
   var syncTLClock = priv.syncTLClock;
-  syncTLClock.setAvailability(true);
+  syncTLClock.setAvailabilityFlag(false);
 }
 
 /*
@@ -83,7 +83,7 @@ TSClientProtocol.prototype._sendSetupMessage = function () {
   var priv = PRIVATE.get(this);
 
   var setupMsg = new TSSetupMessage(priv.contentIdStem, priv.timelineSelector);
-  this.emit(setupMsg.serialise());
+  this.emit("send", setupMsg.serialise());
 }
 
 /**
@@ -101,16 +101,17 @@ TSClientProtocol.prototype.handleMessage = function (msg) {
 
     var correlation = new Correlation(cts.wallClockTime, cts.contentTime);
     var speed = cts.timelineSpeedMultiplier;
+
     if (syncTLClock.isChangeSignificant(correlation, speed)) {
       syncTLClock.setCorrelationAndSpeed(correlation, speed);
-      syncTLClock.setAvailability(true);
+      syncTLClock.setAvailabilityFlag(true);
     }
 
   } catch (e) {
 
-    throw e;
+    throw "TSCP handleMessage: exception: " + e + " -- msg: " + msg;
   }
 };
 
 
-modules.exports = TSClientProtocol;
+module.exports = TSClientProtocol;
