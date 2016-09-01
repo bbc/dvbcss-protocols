@@ -16,7 +16,8 @@ module.exports = {
       PresentationTimestamps :       require ("./TimelineSynchronisation/PresentationTimestamps"),
       PresentationTimestamp :        require ("./TimelineSynchronisation/PresentationTimestamp"),
       ControlTimestamp :             require ("./TimelineSynchronisation/ControlTimestamp"),
-      TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage")
+      TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage"),
+      TSClientProtocol :               require ("./TimelineSynchronisation/TSClientProtocol")
     },
 
     SocketAdaptors: {
