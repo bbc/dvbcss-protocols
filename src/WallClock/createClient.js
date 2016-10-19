@@ -17,7 +17,7 @@ var createClient = function(socket, AdaptorClass, serialiser, wallClock, clientO
             serialiser,
             clientOptions 
         ),
-        webSocket);
+        socket);
 };
 
 

@@ -23,9 +23,10 @@
     "webpack": "^1.12.3"
   },
   "dependencies": {
+    "dvbcss-clocks": "git+https://gitlab-ext.irt.de/2-immerse/dvbcss-clocks.git#master",
     "events": "^1.1.1",
     "inherits": "^2.0.1",
-    "weakmap": "0.0.6",
-    "dvbcss-clocks": "git+https://gitlab-ext.irt.de/2-immerse/dvbcss-clocks.git#master"
+    "js-object-clone": "^0.4.2",
+    "weakmap": "0.0.6"
   }
 }

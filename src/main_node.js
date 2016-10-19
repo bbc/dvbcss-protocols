@@ -14,11 +14,14 @@ module.exports = {
      */
     WallClock: {
         createClient:                require("./WallClock/createClient"),
+        createServer:                require("./WallClock/createServer"),
         createBinaryUdpClient:       require("./WallClock/createBinaryUdpClient"),
+        createBinaryUdpServer:       require("./WallClock/createBinaryUdpServer"),
         createBinaryWebSocketClient: require("./WallClock/createBinaryWebSocketClient"),
         createJsonWebSocketClient:   require("./WallClock/createJsonWebSocketClient"),
         
         WallClockClientProtocol:     require("./WallClock/WallClockClientProtocol"),
+        WallClockServerProtocol:     require("./WallClock/WallClockServerProtocol"),
         Candidate:                   require("./WallClock/Candidate"),
         WallClockMessage:            require("./WallClock/WallClockMessage"),
         JsonSerialiser:              require("./WallClock/JsonSerialiser"),

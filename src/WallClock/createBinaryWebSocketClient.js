@@ -8,7 +8,7 @@ var BinarySerialiser = require("./BinarySerialiser");
  * Factory function that creates a Wall Clock client that uses a WebSocket
  * and sends/receives protocol messages in binary format.
  *
- * @param {WebSocket} webSocket A W3C WebSockets API comaptible websocket connection object
+ * @param {WebSocket} webSocket A W3C WebSockets API compatible websocket connection object
  * @param {CorrelatedClock} wallClock
  * @param {Object} clientOptions
  * @returns {module:sync-protocols/SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client
