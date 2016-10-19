@@ -19,7 +19,7 @@ module.exports = {
         createBinaryUdpServer:       require("./WallClock/createBinaryUdpServer"),
         createBinaryWebSocketClient: require("./WallClock/createBinaryWebSocketClient"),
         createJsonWebSocketClient:   require("./WallClock/createJsonWebSocketClient"),
-        
+
         WallClockClientProtocol:     require("./WallClock/WallClockClientProtocol"),
         WallClockServerProtocol:     require("./WallClock/WallClockServerProtocol"),
         Candidate:                   require("./WallClock/Candidate"),
@@ -27,7 +27,21 @@ module.exports = {
         JsonSerialiser:              require("./WallClock/JsonSerialiser"),
         BinarySerialiser:            require("./WallClock/BinarySerialiser"),
     },
-    
+
+
+    /**
+    * Sub-module providing the TimelineSynchronisation protocol. See [TimelineSynchronisation]{@link module:sync-protocols/TimelineSynchronisation}
+    * @see  module:sync-protocols/TimelineSynchronisation
+    */
+    TimelineSynchronisation : {
+      PresentationTimestamps :       require ("./TimelineSynchronisation/PresentationTimestamps"),
+      PresentationTimestamp :        require ("./TimelineSynchronisation/PresentationTimestamp"),
+      ControlTimestamp :             require ("./TimelineSynchronisation/ControlTimestamp"),
+      TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage"),
+      TSClientProtocol :               require ("./TimelineSynchronisation/TSClientProtocol")
+    },
+
+
     /**
      * Sub-module providing adaptors between network socket objects and the protocol implementations. See [WallClock]{@link module:sync-protocols/SocketAdaptors}
      * @see module:sync-protocols/SocketAdaptors
