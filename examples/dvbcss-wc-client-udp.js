@@ -8,7 +8,7 @@ var wallClock = new clocks.CorrelatedClock(sysClock);
 var udpSocket = dgram.createSocket({type:'udp4', reuseAddr:true});
 
 var protocolOptions = {
-    dest: { address:"127.0.0.1", port:6677 }
+    dest: { address:"192.168.0.11", port:6677 }
 };
 
 udpSocket.on('listening', function() {
