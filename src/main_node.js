@@ -17,6 +17,7 @@ module.exports = {
         createServer:                require("./WallClock/createServer"),
         createBinaryUdpClient:       require("./WallClock/createBinaryUdpClient"),
         createBinaryUdpServer:       require("./WallClock/createBinaryUdpServer"),
+        createBinaryWebSocketServer: require("./WallClock/createBinaryWebSocketServer"),
         createBinaryWebSocketClient: require("./WallClock/createBinaryWebSocketClient"),
         createJsonWebSocketClient:   require("./WallClock/createJsonWebSocketClient"),
 

@@ -15,12 +15,12 @@ var PRIVATE = new WeakMap();
  *
  * Protocol handler that implements a Wall Clock Client.
  *
- * <p>Emits a {@link event:send} to send messages, and is passed recieved
+ * <p>Emits a {@link event:send} to send messages, and is passed received
  * messages by calling [handleMessage()]{@link WallClockClientProtocol#handleMessage}
  *
  * <p>Is independent of the underlying type of connection (e.g. WebSocket / UDP)
  * and of the message format used on the wire. You provide a {ProtocolSerialiser}
- * 
+ *
  * <p>Message payloads for sending or receiving are accompanied by opaque "destination"
  * routing data that this class uses as an opaque handle for the server being interacted
  * with.
@@ -40,26 +40,27 @@ var WallClockClientProtocol = function(wallClock, serialiser, options) {
     events.EventEmitter.call(this);
     PRIVATE.set(this, {});
     var priv = PRIVATE.get(this);
-    
+
     priv.serialiser = serialiser;
 
     priv.wallClock = wallClock;
     priv.parentClock = wallClock.parent;
-    
+
     // initially unavailable and infinite dispersion
     priv.wallClock.correlation = priv.wallClock.correlation.butWith({initialError:Number.POSITIVE_INFINITY});
     priv.wallClock.speed = 1
     priv.wallClock.availabilityFlag = false;
-    
+
     priv.altClock = new CorrelatedClock(priv.parentClock, {tickRate:wallClock.tickRate, correlation:wallClock.correlation});
 
     priv.sendTimer = null;
-    
+
     priv.requestInterval = (options.requestInterval>0)?options.requestInterval:1000; // default
     priv.followupTimeout = (options.followupTimeout>0)?options.followupTimeout:3000; // default
 
     priv.dest = (options.dest)?options.dest:null;
-    
+    console.log(priv.dest);
+
     priv.responseCache =new Map();
 }
 
@@ -71,7 +72,7 @@ inherits(WallClockClientProtocol, events.EventEmitter);
 WallClockClientProtocol.prototype.start = function() {
     this._sendRequest();
 }
- 
+
 /**
  * @inheritdocs
  */
@@ -101,12 +102,17 @@ WallClockClientProtocol.prototype._sendRequest = function() {
     var t = WallClockMessage.nanosToSecsAndNanos(priv.parentClock.getNanos());
     var msg = WallClockMessage.makeRequest(t[0],t[1]);
     msg = priv.serialiser.pack(msg);
-    this.emit("send", msg, priv.dest);
     
+//    console.log("in WallClockClientProtocol.prototype._sendRequest");
+//    console.log(msg);
+//    console.log(priv.dest);
+    
+    this.emit("send", msg, priv.dest);
+
     // schedule the timer
     priv.sendTimer = setTimeout(this._sendRequest.bind(this), priv.requestInterval);
 }
- 
+
 /**
  * Handle a received Wall clock protocol message
  * @param {Object} msg The received message, not already deserialised
@@ -117,10 +123,20 @@ WallClockClientProtocol.prototype.handleMessage = function(msg, routing) {
 
     var t4 = priv.parentClock.getNanos();
     
-    msg = priv.serialiser.unpack(msg.buffer);
     
+    //console.log("WallClockClientProtocol.prototype.handleMessage:");
+    var data = msg;
+    if (routing.binary===true)
+    {
+    	data = new Uint8Array(msg);
+    }
+    
+    //console.log(data);
+    
+    msg = priv.serialiser.unpack(data.buffer);
+
     var key = ""+msg.originate_timevalue_secs+":"+msg.originate_timevalue_nanos;
-    
+
     if (msg.type == WallClockMessage.TYPES.responseWithFollowUp) {
 
         // follow-up is promised ... set timeout to use it
@@ -142,7 +158,7 @@ WallClockClientProtocol.prototype.handleMessage = function(msg, routing) {
         this._updateClockIfCandidateIsImprovement(msg, t4);
     }
 }
- 
+
 WallClockClientProtocol.prototype._updateClockIfCandidateIsImprovement = function(msg,t4) {
     var priv = PRIVATE.get(this);
 
@@ -150,17 +166,17 @@ WallClockClientProtocol.prototype._updateClockIfCandidateIsImprovement = functio
     var candidateCorrelation = candidate.toCorrelation(priv.wallClock);
 
     priv.altClock.setCorrelation(candidateCorrelation);
-    
+
     var now = priv.wallClock.now();
-    
+
     var dispersionNew = priv.altClock.dispersionAtTime(now);
     var dispersionExisting = priv.wallClock.dispersionAtTime(now);
-    
+
     if (dispersionNew < dispersionExisting) {
         priv.wallClock.correlation = priv.altClock.correlation;
         priv.wallClock.availabilityFlag = true;
     }
 }
- 
+
 
 module.exports = WallClockClientProtocol;

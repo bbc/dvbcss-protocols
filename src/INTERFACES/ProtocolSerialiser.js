@@ -13,7 +13,7 @@ var ProtocolSerialiser = {
     pack: function(wcMsg) { throw "Not implemented"; },
     /**
      * Deserialise a received protocol message into an object representing it
-     * @param {String|Uint8Array} wcMsg The received serialsed message.
+     * @param {String|Uint8Array} wcMsg The received serialised message.
      * @returns {object} Object representing the protocol message.
      */
     unpack: function(msg) { throw "Not implemented"; },

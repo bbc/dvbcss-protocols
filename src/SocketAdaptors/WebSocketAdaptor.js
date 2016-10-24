@@ -27,7 +27,7 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
         }.bind(this),
 
         message: function(evt) {
-            protocolHandler.handleMessage(evt.data, null); // no routing information
+            protocolHandler.handleMessage(evt.data, {binary: evt.binary}); // no routing information
         }.bind(this)
     }
 
@@ -37,16 +37,30 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 
     // handle requests to send
     var send = function(msg, dest) {
+
+      //console.log(dest);
+      
+      if (dest.format){
+        webSocket.send(msg, dest.format);
+        
+      }else if (dest.binary === true){
+    	  webSocket.send(msg, { binary: true, mask: true });
+      }
+      else {
         webSocket.send(msg);
+      }
+
+
+
     };
-    
+
     protocolHandler.on("send", send);
 
     // if already open, commence
     if (webSocket.readyState == webSocket.OPEN) {
         protocolHandler.start();
-    }    
-    
+    }
+
     /**
      * Force this adaptor to stop. Also calls the stop() method of the protocol handlers
      */
@@ -61,4 +75,3 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 };
 
 module.exports = WebSocketAdaptor;
-

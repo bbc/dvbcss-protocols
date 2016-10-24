@@ -21,7 +21,7 @@ require("js-object-clone");
  *
  * <p>Is independent of the underlying type of connection (e.g. WebSocket / UDP)
  * and of the message format used on the wire. You provide a {ProtocolSerialiser}
- * 
+ *
  * <p>Message payloads for sending or receiving are accompanied by opaque "destination"
  * routing data that this class uses as an opaque handle for the server being interacted
  * with.
@@ -41,22 +41,22 @@ var WallClockServerProtocol = function(wallClock, serialiser, protocolOptions) {
     events.EventEmitter.call(this);
     PRIVATE.set(this, {});
     var priv = PRIVATE.get(this);
-    
+
     priv.serialiser = serialiser;
 
     priv.wallClock = wallClock;
     priv.parentClock = wallClock.parent;
-    
+
     // initially unavailable and infinite dispersion
     priv.wallClock.speed = 1
     priv.wallClock.availabilityFlag = true;
-    
-   
+
+
     priv.precision = (protocolOptions.precision)?protocolOptions.precision:wallClock.dispersionAtTime(wallClock.now());
     priv.maxFreqError = (protocolOptions.maxFreqError)?protocolOptions.maxFreqError:wallClock.getRootMaxFreqError();
     priv.followup = (protocolOptions.followup)?protocolOptions.followup:false;
-    
-   
+
+
 }
 
 inherits(WallClockServerProtocol, events.EventEmitter);
@@ -65,31 +65,41 @@ inherits(WallClockServerProtocol, events.EventEmitter);
  * @inheritdocs
  */
 WallClockServerProtocol.prototype.start = function() {
-   
+
 }
- 
+
 /**
  * @inheritdocs
  */
 WallClockServerProtocol.prototype.stop = function() {
-    
+
 }
 
 /**
- * Handle a received Wall clock protocol request message. Sends back a response and if followup flag set to true, it sends back a followup 
+ * Handle a received Wall clock protocol request message. Sends back a response and if followup flag set to true, it sends back a followup
  * @param {Object} msg The received message, not already deserialised
  * @param {*} routing Opaque data to be passed back when sending the response, to ensure it is routed back to the sender
  */
 WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
     var priv = PRIVATE.get(this);
     var reply;
+    var data = msg;
     
+    console.log("WallClockServerProtocol.prototype.handleMessage request received");
+    
+    
+    if (routing.binary===true)
+    {
+    	data = new Uint8Array(msg);
+    }
+    
+    //console.log(data);
     
     // receive time value
     var t2 = priv.wallClock.getNanos();
-    
-    var request = priv.serialiser.unpack(msg.buffer);
-    
+  
+    var request = priv.serialiser.unpack(data.buffer);
+
     if (request.type == WallClockMessage.TYPES.request) {
 
         if (priv.followup)
@@ -99,28 +109,26 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
         {
         	reply = request.toResponse(WallClockMessage.TYPES.response, priv.precision, priv.maxFreqError, t2,  priv.wallClock.getNanos());
         }
-        
-        console.log(reply);
-        
+
+        //console.log(reply);
+
         var serialised_reply = priv.serialiser.pack(reply);
         this.emit("send", serialised_reply, routing);
-    	
-        
+
+
         if (priv.followup)
         {
         	var followupReply = Object.clone(reply);
         	followupReply.type = WallClockMessage.TYPES.followUp;
         	followupReply.transmit_timevalue = priv.wallClock.getNanos();
-        	
+
         	serialised_reply = priv.serialiser.pack(followupReply);
         	this.emit("send", serialised_reply, routing);
         }
-  	
+
 
     } else {
         console.error("WallClockServerProtocol.handlerMessage: received a non-request message");
     }
 }
 module.exports = WallClockServerProtocol;
-
-
