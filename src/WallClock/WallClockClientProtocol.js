@@ -59,9 +59,10 @@ var WallClockClientProtocol = function(wallClock, serialiser, options) {
     priv.followupTimeout = (options.followupTimeout>0)?options.followupTimeout:3000; // default
 
     priv.dest = (options.dest)?options.dest:null;
-    console.log(priv.dest);
+    //console.log(priv.dest);
 
     priv.responseCache =new Map();
+    priv.started = false;
 }
 
 inherits(WallClockClientProtocol, events.EventEmitter);
@@ -70,7 +71,11 @@ inherits(WallClockClientProtocol, events.EventEmitter);
  * @inheritdocs
  */
 WallClockClientProtocol.prototype.start = function() {
-    this._sendRequest();
+	var priv = PRIVATE.get(this);
+	
+	this._sendRequest();
+    
+    priv.started = true;
 }
 
 /**
@@ -83,6 +88,8 @@ WallClockClientProtocol.prototype.stop = function() {
         clearTimeout(priv.sendTimer);
         priv.sendTimer = null;
     }
+    
+    priv.started = false;
 }
 
 /**
@@ -178,5 +185,13 @@ WallClockClientProtocol.prototype._updateClockIfCandidateIsImprovement = functio
     }
 }
 
+/**
+ * Returns true if this protocol handler is started.
+ */
+WallClockClientProtocol.prototype.isStarted = function() {
+	var priv = PRIVATE.get(this);
+	
+	return priv.started ? true:false;
+}
 
 module.exports = WallClockClientProtocol;

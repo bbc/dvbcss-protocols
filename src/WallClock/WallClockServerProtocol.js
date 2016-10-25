@@ -43,7 +43,7 @@ var WallClockServerProtocol = function(wallClock, serialiser, protocolOptions) {
     var priv = PRIVATE.get(this);
 
     priv.serialiser = serialiser;
-
+    
     priv.wallClock = wallClock;
     priv.parentClock = wallClock.parent;
 
@@ -55,7 +55,8 @@ var WallClockServerProtocol = function(wallClock, serialiser, protocolOptions) {
     priv.precision = (protocolOptions.precision)?protocolOptions.precision:wallClock.dispersionAtTime(wallClock.now());
     priv.maxFreqError = (protocolOptions.maxFreqError)?protocolOptions.maxFreqError:wallClock.getRootMaxFreqError();
     priv.followup = (protocolOptions.followup)?protocolOptions.followup:false;
-
+    
+    priv.started = false;
 
 }
 
@@ -65,14 +66,16 @@ inherits(WallClockServerProtocol, events.EventEmitter);
  * @inheritdocs
  */
 WallClockServerProtocol.prototype.start = function() {
-
+	var priv = PRIVATE.get(this);
+	priv.started = true;
 }
 
 /**
- * @inheritdocs
+ * @inheritdocs 
  */
 WallClockServerProtocol.prototype.stop = function() {
-
+	var priv = PRIVATE.get(this);
+	priv.started = false;
 }
 
 /**
@@ -84,7 +87,7 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
     var priv = PRIVATE.get(this);
     var reply;
     var data = msg;
-    
+    priv.started = true;
     console.log("WallClockServerProtocol.prototype.handleMessage request received");
     
     
@@ -131,4 +134,13 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
         console.error("WallClockServerProtocol.handlerMessage: received a non-request message");
     }
 }
+
+/**
+ * Returns true if this protocol handler is started.
+ */
+WallClockServerProtocol.prototype.isStarted = function() {
+	var priv = PRIVATE.get(this);
+	return priv.started ? true:false;
+}
+
 module.exports = WallClockServerProtocol;

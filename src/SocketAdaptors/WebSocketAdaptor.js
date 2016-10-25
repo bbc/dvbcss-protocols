@@ -50,8 +50,6 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
         webSocket.send(msg);
       }
 
-
-
     };
 
     protocolHandler.on("send", send);
@@ -70,6 +68,11 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
         webSocket.removeEventListener("message", handlers.message);
         protocolHandler.removeListener("send", send);
         protocolHandler.stop();
+    };
+
+    this.isStarted = function(){
+    	
+    	return(protocolHandler.isStarted());
     };
 
 };

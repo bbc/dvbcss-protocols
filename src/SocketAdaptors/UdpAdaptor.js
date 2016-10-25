@@ -16,8 +16,10 @@
  * @listens send
  */
 var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
-
-    var handlers = {
+	
+	this.protocolHandler = protocolHandler;
+	this.dgramSocket = boundDgramSocket;
+    this.handlers = {
         close: function() {
             this.stop();
         }.bind(this),
@@ -27,8 +29,8 @@ var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
         }.bind(this)
     }
 
-    boundDgramSocket.on("close", handlers.close);
-    boundDgramSocket.on("message", handlers.message);
+    boundDgramSocket.on("close", this.handlers.close);
+    boundDgramSocket.on("message", this.handlers.message);
 
     // handle requests to send
     var send = function(msg, rinfo) {
@@ -49,8 +51,16 @@ var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
         protocolHandler.removeListener("send", send);
         protocolHandler.stop();
     };
+    
+    this.isStarted = function(){
+    	
+    	return(protocolHandler.isStarted());
+    };
 
 };
+
+
+
 
 
 module.exports = UdpAdaptor;

@@ -5,9 +5,9 @@ var createClient = SyncProtocols.WallClock.createBinaryWebSocketClient;
 var sysClock = new clocks.DateNowClock();
 var wallClock = new clocks.CorrelatedClock(sysClock);
 
-var ws = new WebSocket('ws://192.168.0.11:6676/wc');
+var ws = new WebSocket('ws://172.20.10.2:6676/wc');
 var protocolOptions = {
-    dest: { address:"ws://192.168.0.11:6676/wc", port:6676, format: { binary: true, mask: true }},
+    dest: { address:"ws://172.20.10.2:6676/wc", port:6676, format: { binary: true, mask: true }},
 };
 
 

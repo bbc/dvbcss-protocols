@@ -15,13 +15,15 @@ var protocolOptions = {
 
 var udpSocket = dgram.createSocket({type:'udp4', reuseAddr:true});
 
-
 udpSocket.on('listening', function() {
     var wcServer = createServer(udpSocket, wallClock, protocolOptions);
 
     var address = udpSocket.address();
     console.log(`wallclock server listening ${address.address}:${address.port}`);
+    
+    console.log(wcServer.isStarted());
 
 });
 
 udpSocket.bind(6677);
+
