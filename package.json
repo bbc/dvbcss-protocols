@@ -23,7 +23,7 @@
     "webpack": "^1.12.3"
   },
   "dependencies": {
-    "dvbcss-clocks": "git+https://gitlab-ext.irt.de/2-immerse/dvbcss-clocks.git#master",
+    "dvbcss-clocks": "git+ssh://git@gitlab-ext.irt.de/2-immerse/dvbcss-clocks.git#master",
     "events": "^1.1.1",
     "inherits": "^2.0.1",
     "js-object-clone": "^0.4.2",
