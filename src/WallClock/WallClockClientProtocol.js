@@ -57,7 +57,9 @@ var WallClockClientProtocol = function(wallClock, serialiser, options) {
 
     priv.requestInterval = (options.requestInterval>0)?options.requestInterval:1000; // default
     priv.followupTimeout = (options.followupTimeout>0)?options.followupTimeout:3000; // default
-
+    
+    console.log("WallClockClientProtocol constructor");
+    console.log(options);
     priv.dest = (options.dest)?options.dest:null;
     //console.log(priv.dest);
 
@@ -72,7 +74,7 @@ inherits(WallClockClientProtocol, events.EventEmitter);
  */
 WallClockClientProtocol.prototype.start = function() {
 	var priv = PRIVATE.get(this);
-	
+	 console.log("in WallClockClientProtocol.prototype.start");
 	this._sendRequest();
     
     priv.started = true;
@@ -110,9 +112,9 @@ WallClockClientProtocol.prototype._sendRequest = function() {
     var msg = WallClockMessage.makeRequest(t[0],t[1]);
     msg = priv.serialiser.pack(msg);
     
-//    console.log("in WallClockClientProtocol.prototype._sendRequest");
-//    console.log(msg);
-//    console.log(priv.dest);
+//   console.log("in WallClockClientProtocol.prototype._sendRequest");
+//   console.log(msg);
+//   console.log(priv.dest);
     
     this.emit("send", msg, priv.dest);
 
@@ -131,14 +133,18 @@ WallClockClientProtocol.prototype.handleMessage = function(msg, routing) {
     var t4 = priv.parentClock.getNanos();
     
     
-    //console.log("WallClockClientProtocol.prototype.handleMessage:");
+//    console.log("WallClockClientProtocol.prototype.handleMessage1:");
+    //console.log(routing);
+
     var data = msg;
-    if (routing.binary===true)
+    if ((routing.binary===true) || (msg instanceof ArrayBuffer))
     {
     	data = new Uint8Array(msg);
     }
-    
-    //console.log(data);
+//    console.log("WallClockClientProtocol.prototype.handleMessage2:");
+//    console.log(data);
+//    console.log("WallClockClientProtocol.prototype.handleMessage3:");
+//    console.log(data.buffer);
     
     msg = priv.serialiser.unpack(data.buffer);
 

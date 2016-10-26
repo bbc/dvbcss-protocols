@@ -88,15 +88,15 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
     var reply;
     var data = msg;
     priv.started = true;
-    console.log("WallClockServerProtocol.prototype.handleMessage request received");
-    
+//    console.log("WallClockServerProtocol.prototype.handleMessage request received");
+//    console.log(routing);
     
     if (routing.binary===true)
     {
     	data = new Uint8Array(msg);
     }
     
-    //console.log(data);
+//    console.log(data);
     
     // receive time value
     var t2 = priv.wallClock.getNanos();
@@ -112,8 +112,8 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
         {
         	reply = request.toResponse(WallClockMessage.TYPES.response, priv.precision, priv.maxFreqError, t2,  priv.wallClock.getNanos());
         }
-
-        //console.log(reply);
+//        console.log("WallClockServerProtocol.prototype.handleMessage reply");
+//        console.log(reply);
 
         var serialised_reply = priv.serialiser.pack(reply);
         this.emit("send", serialised_reply, routing);

@@ -27,6 +27,7 @@
     "events": "^1.1.1",
     "inherits": "^2.0.1",
     "js-object-clone": "^0.4.2",
+    "reconnectingwebsocket": "^1.0.0",
     "weakmap": "0.0.6",
     "ws": "^1.1.1"
   }

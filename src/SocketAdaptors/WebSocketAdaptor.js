@@ -27,6 +27,9 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
         }.bind(this),
 
         message: function(evt) {
+//        	console.log("WebSocketAdaptor. received msg");
+//        	//console.log(evt);
+
             protocolHandler.handleMessage(evt.data, {binary: evt.binary}); // no routing information
         }.bind(this)
     }
@@ -37,14 +40,16 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 
     // handle requests to send
     var send = function(msg, dest) {
-
-      //console.log(dest);
+    
+//      console.log(msg);	
+//      console.log(dest);
       
       if (dest.format){
         webSocket.send(msg, dest.format);
         
       }else if (dest.binary === true){
-    	  webSocket.send(msg, { binary: true, mask: true });
+//    	  console.log("WebSocketAdaptor. send binary msg");
+    	  webSocket.send(msg, { binary: true });
       }
       else {
         webSocket.send(msg);
@@ -55,7 +60,7 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
     protocolHandler.on("send", send);
 
     // if already open, commence
-    if (webSocket.readyState == webSocket.OPEN) {
+    if (webSocket.readyState == 1) {
         protocolHandler.start();
     }
 
