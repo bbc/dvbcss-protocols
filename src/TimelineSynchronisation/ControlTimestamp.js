@@ -42,6 +42,11 @@ ControlTimestamp.prototype.serialise = function () {
   @returns {ControlTimestamp} Creates a ControlTimestamp from a JSON formatted string as defined by ETSI TS XXX clause 5.7.5
 */
 ControlTimestamp.deserialise = function (jsonVal) {
+    // coerce from arraybuffer,if needed
+    if (jsonVal instanceof ArrayBuffer) {
+        jsonVal = String.fromCharCode.apply(null, new Uint8Array(jsonVal));
+    }
+
   var o = JSON.parse(jsonVal);
 
   return new ControlTimestamp(

@@ -126,7 +126,7 @@ describe("WebSocketAdaptor", function() {
         var wsa = new WebSocketAdaptor(protocol, ws);
         
         protocol.emit("send", payload, null);
-        expect(ws.send).toHaveBeenCalledWith(payload);
+        expect(ws.send).toHaveBeenCalledWith(payload, {binary:false, mask:true});
     });
     
     it("ignores an open event on the websocket after stop() is called, and therefore does not call start() on the protocol handler", function() {

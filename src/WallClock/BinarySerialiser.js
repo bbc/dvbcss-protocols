@@ -21,7 +21,7 @@ var BinarySerialiser = {
     /**
      * Serialise an object representing a Wall Clock protocol message ready for transmission on the wire
      * @param {WallClockMessage} wcMsg Object representing Wall Clock protocol message.
-     * @returns {String|Uint8Array} The serialsed message.
+     * @returns {ArrayBuffer} The serialsed message.
      */
     pack: function(wcMsg) {
         if (wcMsg.version != 0) { throw "Invalid message version"; }
@@ -48,12 +48,12 @@ var BinarySerialiser = {
         d.setUint32(24, t3[0]);
         d.setUint32(28, t3[1]);
 
-        return udpMsg;
+        return udpMsg.buffer;
     },
     
     /**
      * Deserialise a received Wall Clock protocol message into an object representing it
-     * @param {String|Uint8Array} wcMsg The received serialsed message.
+     * @param {ArrayBuffer} wcMsg The received serialsed message.
      * @returns {WallClockMessage} Object representing the Wall Clock protocol message.
      */
     unpack: function(msg) {

@@ -4,7 +4,7 @@
  * @description
  * Adaptor that manages a bound UDP datagram socket and interfaces it to a protocol handler.
  *
- * <p>It calls the handleMessage() method of the protocol handler when messages are received.
+ * <p>It calls the handleMessage() method of the protocol handler when messages are received with type {ArrayBuffer}.
  * And it listens for {event:send} fired by the protocol handler to send messages.
  *
  * <p>The destination routing information is an object with "port" and "address" properties.
@@ -25,7 +25,7 @@ var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
         }.bind(this),
 
         message: function(msg, rinfo) {
-            protocolHandler.handleMessage(new Uint8Array(msg), rinfo); // no routing information
+            protocolHandler.handleMessage(new Uint8Array(msg).buffer, rinfo); // no routing information
         }.bind(this)
     }
 
@@ -46,8 +46,8 @@ var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
      * Force this adaptor to stop. Also calls the stop() method of the protocol handlers
      */
     this.stop = function() {
-        boundDgramSocket.removeListener("close", handlers.close);
-        boundDgramSocket.removeListener("message", handlers.message);
+        boundDgramSocket.removeListener("close", this.handlers.close);
+        boundDgramSocket.removeListener("message", this.handlers.message);
         protocolHandler.removeListener("send", send);
         protocolHandler.stop();
     };

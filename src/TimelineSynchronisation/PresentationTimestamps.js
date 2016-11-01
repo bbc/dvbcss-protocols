@@ -35,6 +35,10 @@ PresentationTimestamps.prototype.serialise = function () {
  * @returns {PresentationTimestamps} actual, earliest and latest presentation timestamps from a JSON formatted string
  */
 PresentationTimestamps.deserialise = function (jsonVal) {
+    // coerce from arraybuffer,if needed
+    if (jsonVal instanceof ArrayBuffer) {
+        jsonVal = String.fromCharCode.apply(null, new Uint8Array(jsonVal));
+    }
   var o = JSON.parse(jsonVal);
 
   return new PresentationTimestamps (

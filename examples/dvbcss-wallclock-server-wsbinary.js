@@ -14,7 +14,7 @@ var protocolOptions = {
 };
 console.log("WallClock server (binary + websockets) ...");
 
-var wss = new WebSocketServer({ host: "172.20.10.2", port: 6676 });
+var wss = new WebSocketServer({ host: "0.0.0.0", port: 6676 });
 
 wss.on('connection', function connection(ws) {
 

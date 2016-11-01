@@ -23,6 +23,10 @@ TSSetupMessage.prototype.serialise = function () {
 };
 
 TSSetupMessage.deserialise = function (jsonVal) {
+    // coerce from arraybuffer,if needed
+    if (jsonVal instanceof ArrayBuffer) {
+        jsonVal = String.fromCharCode.apply(null, new Uint8Array(jsonVal));
+    }
   var o = JSON.parse(jsonVal);
 
   return new TSSetupMessage (o.contentIdStem, o.timelineSelector);

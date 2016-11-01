@@ -90,7 +90,7 @@ describe("TSClientProtocol", function() {
 
         //ws.readyState = ws.OPEN;
         ws.triggerEvent("open", {});
-        expect(ws.send).toHaveBeenCalledWith(new TSSetupMessage(options.contentIdStem, options.timelineSelector).serialise());
+        expect(ws.send).toHaveBeenCalledWith(new TSSetupMessage(options.contentIdStem, options.timelineSelector).serialise(), {binary:false, mask:true});
     });
 
     it("initialises the CorrelatedClock object when it receives the first control timestamp.", function() {

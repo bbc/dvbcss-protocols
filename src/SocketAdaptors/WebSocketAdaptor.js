@@ -30,7 +30,14 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 //        	console.log("WebSocketAdaptor. received msg");
 //        	//console.log(evt);
 
-            protocolHandler.handleMessage(evt.data, {binary: evt.binary}); // no routing information
+            var msg;
+            if (evt.binary) {
+                msg = new Uint8Array(evt.data).buffer;
+            } else {
+                msg = evt.data;
+            }
+
+            protocolHandler.handleMessage(msg, null); // no routing information
         }.bind(this)
     }
 
@@ -43,20 +50,16 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
     
 //      console.log(msg);	
 //      console.log(dest);
-      
-      if (dest.format){
-        webSocket.send(msg, dest.format);
+
+
+        // binary/mask parameters are support for https://github.com/websockets/ws
+        // is ignored by W3C compliant websocket libraries
         
-      }else if (dest.binary === true){
-//    	  console.log("WebSocketAdaptor. send binary msg");
-    	  webSocket.send(msg, { binary: true });
-      }
-      else {
-        webSocket.send(msg);
-      }
-
+        var isBinary = msg instanceof ArrayBuffer;
+        webSocket.send(msg, { binary: isBinary, mask: true });
+  
     };
-
+  
     protocolHandler.on("send", send);
 
     // if already open, commence

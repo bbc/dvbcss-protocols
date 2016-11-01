@@ -27,6 +27,7 @@ var PRIVATE = new WeakMap();
  * @param {string} options.timelineSelector The Timeline Selector describes the type and location of timeline signalling to be derived from the Timed Content
 currently being presented by the TV Device
  * @param {Number} options.tickrate The tickrate of the timeline that is specified by the timelineSelector.
+ * @param {*} [options.dest] The destination that the client should use when sending not in response to a received message. The value used here will depend on the {SocketAdaptor} being used.
  */
 
 function TSClientProtocol (syncTLClock, options) {
@@ -53,6 +54,8 @@ function TSClientProtocol (syncTLClock, options) {
   priv.timelineSelector = options.timelineSelector;
   // the tickrate of the timeline in ticks per seconds
   priv.tickrate = options.tickrate;
+  
+  priv.dest = (options.dest)?options.dest:null;
 
   priv.syncTLClock.setAvailabilityFlag(false);
 }
@@ -83,7 +86,7 @@ TSClientProtocol.prototype._sendSetupMessage = function () {
   var priv = PRIVATE.get(this);
 
   var setupMsg = new TSSetupMessage(priv.contentIdStem, priv.timelineSelector);
-  this.emit("send", setupMsg.serialise());
+  this.emit("send", setupMsg.serialise(), priv.dest);
 }
 
 /**

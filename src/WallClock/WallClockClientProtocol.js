@@ -132,21 +132,7 @@ WallClockClientProtocol.prototype.handleMessage = function(msg, routing) {
 
     var t4 = priv.parentClock.getNanos();
     
-    
-//    console.log("WallClockClientProtocol.prototype.handleMessage1:");
-    //console.log(routing);
-
-    var data = msg;
-    if ((routing.binary===true) || (msg instanceof ArrayBuffer))
-    {
-    	data = new Uint8Array(msg);
-    }
-//    console.log("WallClockClientProtocol.prototype.handleMessage2:");
-//    console.log(data);
-//    console.log("WallClockClientProtocol.prototype.handleMessage3:");
-//    console.log(data.buffer);
-    
-    msg = priv.serialiser.unpack(data.buffer);
+    msg = priv.serialiser.unpack(msg);
 
     var key = ""+msg.originate_timevalue_secs+":"+msg.originate_timevalue_nanos;
 

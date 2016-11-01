@@ -88,20 +88,11 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
     var reply;
     var data = msg;
     priv.started = true;
-//    console.log("WallClockServerProtocol.prototype.handleMessage request received");
-//    console.log(routing);
-    
-    if (routing.binary===true)
-    {
-    	data = new Uint8Array(msg);
-    }
-    
-//    console.log(data);
     
     // receive time value
     var t2 = priv.wallClock.getNanos();
   
-    var request = priv.serialiser.unpack(data.buffer);
+    var request = priv.serialiser.unpack(data);
 
     if (request.type == WallClockMessage.TYPES.request) {
 

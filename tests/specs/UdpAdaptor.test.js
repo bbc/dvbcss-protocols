@@ -54,7 +54,7 @@ describe("UdpAdaptor", function() {
     it("calls handleMessage on the protocol handler when the socket receives a message, passing the payload and routing information, with the payload converted to a Uint8Array", function() {
         var payload = "foo";
         var rinfo = { address:"1.2.3.4", port:5678 };
-        var payloadExpected = new Uint8Array("foo");
+        var payloadExpected = new Uint8Array("foo").buffer;
         
         var udpa = new UdpAdaptor(protocol, sock);
         

@@ -15,6 +15,7 @@ var makeBinaryMsg = function(arrayByteNumbers) {
 }
 
 var isBinaryMsgEqual = function(expected, actual) {
+    actual = new Uint8Array(actual);
     if (expected.length != actual.length) { return "Length mismatch: expected.length="+expected.length+" vs actual.length="+actual.length; }
     for(var i=0; i<expected.length; i++) {
         if (expected[i] != actual[i]) { return "Value mismatch: expected["+i+"]="+expected[i]+" vs actual["+i+"]="+actual[i]; }
