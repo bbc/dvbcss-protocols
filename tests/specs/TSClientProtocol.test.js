@@ -4,6 +4,7 @@ var TSSetupMessage = require("main_node").TimelineSynchronisation.TSSetupMessage
 var ControlTimestamp = require("main_node").TimelineSynchronisation.ControlTimestamp;
 
 var CorrelatedClock  = require("dvbcss-clocks").CorrelatedClock;
+var DateNowClock  = require("dvbcss-clocks").DateNowClock;
 
 var EventEmitter = require("events");
 var inherits = require("inherits");
@@ -33,32 +34,16 @@ var MockWebSocket = function(url) {
             this["on"+name].apply(this, arguments);
         }
     };
-}
+};
 
 inherits(MockWebSocket, EventEmitter);
 
 var MockClock = function() {
-    var availabilityFlag = false;
-    var correlation = null;
-    var speed = 1.0;
+    var clock = new CorrelatedClock(new DateNowClock(), {tickRate:2000});
+    clock.availabilityFlag = false;
+    return clock;
+};
 
-    this.setAvailabilityFlag = function (flag) {
-      availabilityFlag = flag;
-    };
-
-    this.isChangeSignificant = function (_correlation, _speed) {
-      return true;
-    };
-
-    this.setCorrelationAndSpeed = function (_correlation, _speed) {
-      correlation = _correlation;
-      speed = _speed;
-    };
-
-//    this.setCorrelationAndSpeed = jasmine.createSpy("setCorrelationAndSpeed");
-}
-
-inherits(MockClock, CorrelatedClock);
 
 describe("TSClientProtocol", function() {
     var ws;
@@ -97,7 +82,7 @@ describe("TSClientProtocol", function() {
 
       spyOn(clock, "setCorrelationAndSpeed").and.callThrough();
       spyOn(clock, "isChangeSignificant").and.callThrough();
-      spyOn(clock, "setAvailabilityFlag");
+      spyOn(clock, "setAvailabilityFlag").and.callThrough();;
 
       var tscp = new TSClientProtocol(clock, options);
       var wsAd = new WebSocketAdaptor(tscp, ws);
@@ -105,7 +90,6 @@ describe("TSClientProtocol", function() {
 
       ws.triggerEvent("message", {data: cts.serialise()});
 
-      expect(clock.isChangeSignificant).toHaveBeenCalled();
       expect(clock.setAvailabilityFlag).toHaveBeenCalledWith(true);
       expect(clock.setCorrelationAndSpeed).toHaveBeenCalled();
 
@@ -114,12 +98,14 @@ describe("TSClientProtocol", function() {
     it("updates the CorrelatedClock object when it receives a control timestamp with a significant change.", function() {
 
       spyOn(clock, "isChangeSignificant").and.callThrough();
-      spyOn(clock, "setAvailabilityFlag");
+      spyOn(clock, "setAvailabilityFlag").and.callThrough();
 
       var tscp = new TSClientProtocol(clock, options);
       var wsAd = new WebSocketAdaptor(tscp, ws);
       var cts1 = new ControlTimestamp(1, 2, 1.0);
-      var cts2 = new ControlTimestamp(2, 2, 1.0);
+      var cts2 = new ControlTimestamp(2000000, 2, 1.0);
+      
+      console.log(clock.availabilityFlag);
 
       ws.triggerEvent("message", {data: cts1.serialise()});
       spyOn(clock, "setCorrelationAndSpeed").and.callThrough();

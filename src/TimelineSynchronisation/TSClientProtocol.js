@@ -102,13 +102,18 @@ TSClientProtocol.prototype.handleMessage = function (msg) {
     var cts = ControlTimestamp.deserialise(msg);
     priv.prevControlTimestamp = cts;
 
-    var correlation = new Correlation(cts.wallClockTime, cts.contentTime);
-    var speed = cts.timelineSpeedMultiplier;
+    var isAvailable = (cts.contentTime !== null);
 
-    if (syncTLClock.isChangeSignificant(correlation, speed, 0.010)) {
-      syncTLClock.setCorrelationAndSpeed(correlation, speed);
-      syncTLClock.setAvailabilityFlag(true);
+    if (isAvailable) {
+      var correlation = new Correlation(cts.wallClockTime, cts.contentTime);
+      var speed = cts.timelineSpeedMultiplier;
+
+      if (!syncTLClock.availabilityFlag || syncTLClock.isChangeSignificant(correlation, speed, 0.010)) {
+        syncTLClock.setCorrelationAndSpeed(correlation, speed);
+      }
     }
+    
+    syncTLClock.setAvailabilityFlag(isAvailable);
 
   } catch (e) {
 
