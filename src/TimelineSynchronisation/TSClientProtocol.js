@@ -105,7 +105,7 @@ TSClientProtocol.prototype.handleMessage = function (msg) {
     var correlation = new Correlation(cts.wallClockTime, cts.contentTime);
     var speed = cts.timelineSpeedMultiplier;
 
-    if (syncTLClock.isChangeSignificant(correlation, speed)) {
+    if (syncTLClock.isChangeSignificant(correlation, speed, 0.010)) {
       syncTLClock.setCorrelationAndSpeed(correlation, speed);
       syncTLClock.setAvailabilityFlag(true);
     }
