@@ -52,11 +52,11 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 //      console.log(dest);
 
 
-        // binary/mask parameters are support for https://github.com/websockets/ws
+        // binary parameter is support for https://github.com/websockets/ws
         // is ignored by W3C compliant websocket libraries
         
         var isBinary = msg instanceof ArrayBuffer;
-        webSocket.send(msg, { binary: isBinary, mask: true });
+        webSocket.send(msg, { binary: isBinary });
   
     };
   
