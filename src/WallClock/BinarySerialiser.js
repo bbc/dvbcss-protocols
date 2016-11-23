@@ -14,7 +14,7 @@ Math.trunc = Math.trunc || function(x) {
  * BinarySerialiser message serialiser/deserialiser for Wall Clock protocol messages.
  * The binary format is that defined in ETSI TS 103 286-2 clause 8
  * (the wall clock protocol message format).
- * 
+ *
  * @implements {ProtocolSerialiser}
  */
 var BinarySerialiser = {
@@ -25,20 +25,20 @@ var BinarySerialiser = {
      */
     pack: function(wcMsg) {
         if (wcMsg.version != 0) { throw "Invalid message version"; }
-        
-		// create the UDP message to send
-		var udpMsg = new Uint8Array(32);
-		var d = new DataView(udpMsg.buffer);
 
-		d.setUint8(0, wcMsg.version);
-		d.setUint8(1, wcMsg.type);
+        // create the UDP message to send
+        var udpMsg = new Uint8Array(32);
+        var d = new DataView(udpMsg.buffer);
+
+        d.setUint8(0, wcMsg.version);
+        d.setUint8(1, wcMsg.type);
         d.setUint8(2, Math.ceil(Math.log2(wcMsg.precision)));
-		d.setUint8(3, 0);  // reserved bits
+        d.setUint8(3, 0);  // reserved bits
 
         d.setUint32( 4, wcMsg.max_freq_error*256);
-        
+
         d.setUint32( 8, wcMsg.originate_timevalue_secs);
-	    d.setUint32(12, wcMsg.originate_timevalue_nanos);
+        d.setUint32(12, wcMsg.originate_timevalue_nanos);
 
         var t2 = WallClockMessage.nanosToSecsAndNanos(wcMsg.receive_timevalue);
         d.setUint32(16, t2[0]);
@@ -50,14 +50,14 @@ var BinarySerialiser = {
 
         return udpMsg.buffer;
     },
-    
+
     /**
      * Deserialise a received Wall Clock protocol message into an object representing it
      * @param {ArrayBuffer} wcMsg The received serialsed message.
      * @returns {WallClockMessage} Object representing the Wall Clock protocol message.
      */
     unpack: function(msg) {
-		var data = new DataView(msg)
+        var data = new DataView(msg)
 
         var version = data.getUint8(0);
         if (version != 0) { throw "Invalid message version"; }

@@ -43,7 +43,7 @@ var WallClockServerProtocol = function(wallClock, serialiser, protocolOptions) {
     var priv = PRIVATE.get(this);
 
     priv.serialiser = serialiser;
-    
+
     priv.wallClock = wallClock;
     priv.parentClock = wallClock.parent;
 
@@ -55,7 +55,7 @@ var WallClockServerProtocol = function(wallClock, serialiser, protocolOptions) {
     priv.precision = (protocolOptions.precision)?protocolOptions.precision:wallClock.dispersionAtTime(wallClock.now());
     priv.maxFreqError = (protocolOptions.maxFreqError)?protocolOptions.maxFreqError:wallClock.getRootMaxFreqError();
     priv.followup = (protocolOptions.followup)?protocolOptions.followup:false;
-    
+
     priv.started = false;
 
 }
@@ -66,16 +66,16 @@ inherits(WallClockServerProtocol, events.EventEmitter);
  * @inheritdocs
  */
 WallClockServerProtocol.prototype.start = function() {
-	var priv = PRIVATE.get(this);
-	priv.started = true;
+    var priv = PRIVATE.get(this);
+    priv.started = true;
 }
 
 /**
- * @inheritdocs 
+ * @inheritdocs
  */
 WallClockServerProtocol.prototype.stop = function() {
-	var priv = PRIVATE.get(this);
-	priv.started = false;
+    var priv = PRIVATE.get(this);
+    priv.started = false;
 }
 
 /**
@@ -88,20 +88,20 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
     var reply;
     var data = msg;
     priv.started = true;
-    
+
     // receive time value
     var t2 = priv.wallClock.getNanos();
-  
+
     var request = priv.serialiser.unpack(data);
 
     if (request.type == WallClockMessage.TYPES.request) {
 
         if (priv.followup)
         {
-        	reply = request.toResponse(WallClockMessage.TYPES.responseWithFollowUp, priv.precision, priv.maxFreqError, t2,  priv.wallClock.getNanos());
+            reply = request.toResponse(WallClockMessage.TYPES.responseWithFollowUp, priv.precision, priv.maxFreqError, t2,  priv.wallClock.getNanos());
         }else
         {
-        	reply = request.toResponse(WallClockMessage.TYPES.response, priv.precision, priv.maxFreqError, t2,  priv.wallClock.getNanos());
+            reply = request.toResponse(WallClockMessage.TYPES.response, priv.precision, priv.maxFreqError, t2,  priv.wallClock.getNanos());
         }
 //        console.log("WallClockServerProtocol.prototype.handleMessage reply");
 //        console.log(reply);
@@ -112,12 +112,12 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
 
         if (priv.followup)
         {
-        	var followupReply = Object.clone(reply);
-        	followupReply.type = WallClockMessage.TYPES.followUp;
-        	followupReply.transmit_timevalue = priv.wallClock.getNanos();
+            var followupReply = Object.clone(reply);
+            followupReply.type = WallClockMessage.TYPES.followUp;
+            followupReply.transmit_timevalue = priv.wallClock.getNanos();
 
-        	serialised_reply = priv.serialiser.pack(followupReply);
-        	this.emit("send", serialised_reply, routing);
+            serialised_reply = priv.serialiser.pack(followupReply);
+            this.emit("send", serialised_reply, routing);
         }
 
 
@@ -130,8 +130,8 @@ WallClockServerProtocol.prototype.handleMessage = function(msg, routing) {
  * Returns true if this protocol handler is started.
  */
 WallClockServerProtocol.prototype.isStarted = function() {
-	var priv = PRIVATE.get(this);
-	return priv.started ? true:false;
+    var priv = PRIVATE.get(this);
+    return priv.started ? true:false;
 }
 
 module.exports = WallClockServerProtocol;

@@ -57,7 +57,7 @@ var WallClockClientProtocol = function(wallClock, serialiser, options) {
 
     priv.requestInterval = (options.requestInterval>0)?options.requestInterval:1000; // default
     priv.followupTimeout = (options.followupTimeout>0)?options.followupTimeout:3000; // default
-    
+
     console.log("WallClockClientProtocol constructor");
     console.log(options);
     priv.dest = (options.dest)?options.dest:null;
@@ -73,10 +73,10 @@ inherits(WallClockClientProtocol, events.EventEmitter);
  * @inheritdocs
  */
 WallClockClientProtocol.prototype.start = function() {
-	var priv = PRIVATE.get(this);
-	 console.log("in WallClockClientProtocol.prototype.start");
-	this._sendRequest();
-    
+    var priv = PRIVATE.get(this);
+     console.log("in WallClockClientProtocol.prototype.start");
+    this._sendRequest();
+
     priv.started = true;
 }
 
@@ -90,7 +90,7 @@ WallClockClientProtocol.prototype.stop = function() {
         clearTimeout(priv.sendTimer);
         priv.sendTimer = null;
     }
-    
+
     priv.started = false;
 }
 
@@ -111,11 +111,11 @@ WallClockClientProtocol.prototype._sendRequest = function() {
     var t = WallClockMessage.nanosToSecsAndNanos(priv.parentClock.getNanos());
     var msg = WallClockMessage.makeRequest(t[0],t[1]);
     msg = priv.serialiser.pack(msg);
-    
+
 //   console.log("in WallClockClientProtocol.prototype._sendRequest");
 //   console.log(msg);
 //   console.log(priv.dest);
-    
+
     this.emit("send", msg, priv.dest);
 
     // schedule the timer
@@ -131,7 +131,7 @@ WallClockClientProtocol.prototype.handleMessage = function(msg, routing) {
     var priv = PRIVATE.get(this);
 
     var t4 = priv.parentClock.getNanos();
-    
+
     msg = priv.serialiser.unpack(msg);
 
     var key = ""+msg.originate_timevalue_secs+":"+msg.originate_timevalue_nanos;
@@ -181,9 +181,9 @@ WallClockClientProtocol.prototype._updateClockIfCandidateIsImprovement = functio
  * Returns true if this protocol handler is started.
  */
 WallClockClientProtocol.prototype.isStarted = function() {
-	var priv = PRIVATE.get(this);
-	
-	return priv.started ? true:false;
+    var priv = PRIVATE.get(this);
+
+    return priv.started ? true:false;
 }
 
 module.exports = WallClockClientProtocol;

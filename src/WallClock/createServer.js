@@ -25,5 +25,3 @@ var createServer = function(socket, AdaptorClass, serialiser, wallClock, protoco
 
 
 module.exports = createServer;
-
-

@@ -16,9 +16,9 @@
  * @listens send
  */
 var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
-	
-	this.protocolHandler = protocolHandler;
-	this.dgramSocket = boundDgramSocket;
+
+    this.protocolHandler = protocolHandler;
+    this.dgramSocket = boundDgramSocket;
     this.handlers = {
         close: function() {
             this.stop();
@@ -37,11 +37,11 @@ var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
         var buf = new Buffer(msg);
         boundDgramSocket.send(buf, 0, buf.length, rinfo.port, rinfo.address);
     };
-    
+
     protocolHandler.on("send", send);
 
     protocolHandler.start();
-    
+
     /**
      * Force this adaptor to stop. Also calls the stop() method of the protocol handlers
      */
@@ -51,16 +51,12 @@ var UdpAdaptor = function(protocolHandler, boundDgramSocket) {
         protocolHandler.removeListener("send", send);
         protocolHandler.stop();
     };
-    
+
     this.isStarted = function(){
-    	
-    	return(protocolHandler.isStarted());
+
+        return(protocolHandler.isStarted());
     };
 
 };
-
-
-
-
 
 module.exports = UdpAdaptor;

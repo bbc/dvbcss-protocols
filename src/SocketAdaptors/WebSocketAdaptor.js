@@ -27,8 +27,8 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
         }.bind(this),
 
         message: function(evt) {
-//        	console.log("WebSocketAdaptor. received msg");
-//        	//console.log(evt);
+//          console.log("WebSocketAdaptor. received msg");
+//          //console.log(evt);
 
             var msg;
             if (evt.binary) {
@@ -47,19 +47,19 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 
     // handle requests to send
     var send = function(msg, dest) {
-    
-//      console.log(msg);	
+
+//      console.log(msg);
 //      console.log(dest);
 
 
         // binary parameter is support for https://github.com/websockets/ws
         // is ignored by W3C compliant websocket libraries
-        
+
         var isBinary = msg instanceof ArrayBuffer;
         webSocket.send(msg, { binary: isBinary });
-  
+
     };
-  
+
     protocolHandler.on("send", send);
 
     // if already open, commence
@@ -79,8 +79,8 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
     };
 
     this.isStarted = function(){
-    	
-    	return(protocolHandler.isStarted());
+
+        return(protocolHandler.isStarted());
     };
 
 };
