@@ -33,6 +33,7 @@ var PRIVATE = new WeakMap();
  * @param {object} [options] Protocol handler options
  * @param {Number} [options.requestInterval] The minimum interval between requests (in milliseconds)
  * @param {Number} [options.followupTimeout] The timeout on waiting for promised follow-up responses (in milliseconds)
+ * @param {Function} [options.logFunction] The function to call to log output debug messages, this defaults to console.log
  * @param {*} [options.dest] The destination that the client should use when sending not in response to a received message. The value used here will depend on the {SocketAdaptor} being used.
  *
  */
@@ -58,10 +59,11 @@ var WallClockClientProtocol = function(wallClock, serialiser, options) {
     priv.requestInterval = (options.requestInterval>0)?options.requestInterval:1000; // default
     priv.followupTimeout = (options.followupTimeout>0)?options.followupTimeout:3000; // default
 
-    console.log("WallClockClientProtocol constructor");
-    console.log(options);
+    priv.log = (typeof options.logFunction === "function") ? options.logFunction : console.log.bind(console);
+
+    priv.log("WallClockClientProtocol constructor: ", options);
     priv.dest = (options.dest)?options.dest:null;
-    //console.log(priv.dest);
+    //priv.log(priv.dest);
 
     priv.responseCache =new Map();
     priv.started = false;
@@ -74,7 +76,7 @@ inherits(WallClockClientProtocol, events.EventEmitter);
  */
 WallClockClientProtocol.prototype.start = function() {
     var priv = PRIVATE.get(this);
-     console.log("in WallClockClientProtocol.prototype.start");
+    priv.log("in WallClockClientProtocol.prototype.start");
     this._sendRequest();
 
     priv.started = true;
@@ -112,9 +114,9 @@ WallClockClientProtocol.prototype._sendRequest = function() {
     var msg = WallClockMessage.makeRequest(t[0],t[1]);
     msg = priv.serialiser.pack(msg);
 
-//   console.log("in WallClockClientProtocol.prototype._sendRequest");
-//   console.log(msg);
-//   console.log(priv.dest);
+//   priv.log("in WallClockClientProtocol.prototype._sendRequest");
+//   priv.log(msg);
+//   priv.log(priv.dest);
 
     this.emit("send", msg, priv.dest);
 
