@@ -9,7 +9,7 @@ var PresentationTimestamps = require("./PresentationTimestamps");
 var Correlation     = require("dvbcss-clocks").Correlation;
 var CorrelatedClock = require("dvbcss-clocks").CorrelatedClock;
 
-var WeakMap = require('weakmap');
+var WeakMap = window.WeakMap || require('weak-map');
 var PRIVATE = new WeakMap();
 /**
  * @alias module:sync-protocols/TimelineSynchronisation.TSClientProtocol
@@ -54,7 +54,7 @@ function TSClientProtocol (syncTLClock, options) {
   priv.timelineSelector = options.timelineSelector;
   // the tickrate of the timeline in ticks per seconds
   priv.tickrate = options.tickrate;
-  
+
   priv.dest = (options.dest)?options.dest:null;
 
   priv.syncTLClock.setAvailabilityFlag(false);
@@ -112,7 +112,7 @@ TSClientProtocol.prototype.handleMessage = function (msg) {
         syncTLClock.setCorrelationAndSpeed(correlation, speed);
       }
     }
-    
+
     syncTLClock.setAvailabilityFlag(isAvailable);
 
   } catch (e) {

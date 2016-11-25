@@ -3,7 +3,7 @@ var inherits = require("inherits");
 
 var WallClockMessage = require("./WallClockMessage");
 var CorrelatedClock = require("dvbcss-clocks").CorrelatedClock;
-var WeakMap = require('weakmap');
+var WeakMap = window.WeakMap || require('weak-map');
 var PRIVATE = new WeakMap();
 
 require("js-object-clone");
