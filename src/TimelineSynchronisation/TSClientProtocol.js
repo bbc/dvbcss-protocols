@@ -9,7 +9,7 @@ var PresentationTimestamps = require("./PresentationTimestamps");
 var Correlation     = require("dvbcss-clocks").Correlation;
 var CorrelatedClock = require("dvbcss-clocks").CorrelatedClock;
 
-var WeakMap = window.WeakMap || require('weak-map');
+var WeakMap = (window && window.WeakMap) || require('weak-map');
 var PRIVATE = new WeakMap();
 /**
  * @alias module:sync-protocols/TimelineSynchronisation.TSClientProtocol

@@ -5,7 +5,7 @@ var WallClockMessage = require("./WallClockMessage");
 var Candidate = require("./Candidate");
 var CorrelatedClock = require("dvbcss-clocks").CorrelatedClock;
 
-var WeakMap = window.WeakMap || require('weak-map');
+var WeakMap = (window && window.WeakMap) || require('weak-map');
 var PRIVATE = new WeakMap();
 
 /**
