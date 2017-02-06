@@ -4,7 +4,6 @@ module.exports = {
         createClient:                require("./WallClock/createClient"),
         createBinaryWebSocketClient: require("./WallClock/createBinaryWebSocketClient"),
         createJsonWebSocketClient:   require("./WallClock/createJsonWebSocketClient"),
-
         WallClockClientProtocol:     require("./WallClock/WallClockClientProtocol"),
         Candidate:                   require("./WallClock/Candidate"),
         WallClockMessage:            require("./WallClock/WallClockMessage"),
@@ -17,7 +16,14 @@ module.exports = {
       PresentationTimestamp :        require ("./TimelineSynchronisation/PresentationTimestamp"),
       ControlTimestamp :             require ("./TimelineSynchronisation/ControlTimestamp"),
       TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage"),
-      TSClientProtocol :               require ("./TimelineSynchronisation/TSClientProtocol")
+      TSClientProtocol :             require ("./TimelineSynchronisation/TSClientProtocol")
+    },
+
+    CII : {
+         CIIMessage :       		    require ("./CII/CIIMessage"),
+        TimelineProperties :         require ("./CII/TimelineProperties"),
+        CIIClientProtocol :          require ("./CII/CIIClientProtocol"),
+        createCIIClient :            require ("./CII/createCIIClient")
     },
 
     SocketAdaptors: {

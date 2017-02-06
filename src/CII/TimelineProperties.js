@@ -9,11 +9,14 @@
  * @constructor
  */
 var TimelineProperties = function(timelineSelector, unitsPerTick, unitsPerSecond, accuracy) {
+	
+	
+  const self = this;
 
-  Object.defineProperty(self, "timelineSelector",  { value: timelineSelector});
-  Object.defineProperty(self, "unitsPerTick",      { value: Number(unitsPerTick)});
-  Object.defineProperty(self, "unitsPerSecond",    { value: Number(unitsPerSecond) });
-  Object.defineProperty(self, 'accuracy',          { value: Number(accuracy) });
+  Object.defineProperty(self, "timelineSelector",  { enumerable: true, value: timelineSelector});
+  Object.defineProperty(self, "unitsPerTick",      { enumerable: true, value: Number(unitsPerTick)});
+  Object.defineProperty(self, "unitsPerSecond",    { enumerable: true, value: Number(unitsPerSecond) });
+  Object.defineProperty(self, 'accuracy',          { enumerable: true, value: Number(accuracy) });
 
 
 }
@@ -27,7 +30,7 @@ TimelineProperties.getFromObj = function (o) {
   return new TimelineProperties(o.timelineSelector,
                                 o.timelineProperties.unitsPerTick,
                                 o.timelineProperties.unitsPerSecond,
-                                o.timelineProperties.accuracy,
+                                o.timelineProperties.accuracy
                               );
 }
 

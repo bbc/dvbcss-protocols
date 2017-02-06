@@ -39,9 +39,15 @@ module.exports = {
       PresentationTimestamp :        require ("./TimelineSynchronisation/PresentationTimestamp"),
       ControlTimestamp :             require ("./TimelineSynchronisation/ControlTimestamp"),
       TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage"),
-      TSClientProtocol :               require ("./TimelineSynchronisation/TSClientProtocol")
+      TSClientProtocol :             require ("./TimelineSynchronisation/TSClientProtocol")
     },
 
+    CII : {
+    	CIIMessage :       			 require ("./CII/CIIMessage"),
+        TimelineProperties :         require ("./CII/TimelineProperties"),
+        CIIClientProtocol :          require ("./CII/CIIClientProtocol"),
+        createCIIClient :            require ("./CII/createCIIClient")
+    },
 
     /**
      * Sub-module providing adaptors between network socket objects and the protocol implementations. See [WallClock]{@link module:sync-protocols/SocketAdaptors}
