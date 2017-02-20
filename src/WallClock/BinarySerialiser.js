@@ -72,6 +72,31 @@ var BinarySerialiser = {
             data.getUint32(16) + data.getUint32(20) / 1000000000,
             data.getUint32(24) + data.getUint32(28) / 1000000000
         );
+    },
+    toHex: function(buffer)
+    {
+       if (buffer instanceof ArrayBuffer){
+
+
+           // create a byte array (Uint8Array) that we can use to read the array buffer
+           const byteArray = new Uint8Array(buffer);
+
+           // for each element, we want to get its two-digit hexadecimal representation
+           const hexParts = [];
+           for(var i = 0; i < byteArray.length; i++) {
+               // convert value to hexadecimal
+               const hex = byteArray[i].toString(16);
+
+               // pad with zeros to length 2
+               const paddedHex = ('00' + hex).slice(-2);
+
+               // push to array
+               hexParts.push(paddedHex);
+           }
+
+           // join all the hex values of the elements into a single string
+           return hexParts.join('');
+      }
     }
 };
 
