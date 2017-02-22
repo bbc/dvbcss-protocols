@@ -39,7 +39,8 @@ module.exports = {
       PresentationTimestamp :        require ("./TimelineSynchronisation/PresentationTimestamp"),
       ControlTimestamp :             require ("./TimelineSynchronisation/ControlTimestamp"),
       TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage"),
-      TSClientProtocol :             require ("./TimelineSynchronisation/TSClientProtocol")
+      TSClientProtocol :             require ("./TimelineSynchronisation/TSClientProtocol"),
+      createTSClient :               require ("./TimelineSynchronisation/createTSClient"), 
     },
 
     CII : {
