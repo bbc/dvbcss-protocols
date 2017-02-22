@@ -1,6 +1,5 @@
 var WebSocketAdaptor = require("../SocketAdaptors/WebSocketAdaptor");
 var WallClockClientProtocol = require("./TSClientProtocol");
-var JsonSerialiser = require("./JsonSerialiser");
 
 /**
  * @alias module:sync-protocols/TimelineSynchronisation.createTSClient
@@ -15,7 +14,6 @@ var JsonSerialiser = require("./JsonSerialiser");
  * @param {string} clientOptions.timelineSelector The Timeline Selector describes the type and location of timeline signalling to be derived from the Timed Content
 currently being presented by the TV Device
  * @param {Number} clientOptions.tickrate The tickrate of the timeline that is specified by the timelineSelector.
- * @param {*} [options.dest] The destination that the client should use when sending not in response to a received message. The value used here will depend on the {SocketAdaptor} being used.
  * @returns {module:sync-protocols/SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client
  */
 var createTSClient = function(webSocket, syncTLClock, clientOptions) {
