@@ -20,7 +20,6 @@ var createTSClient = function(webSocket, syncTLClock, clientOptions) {
     return new WebSocketAdaptor(
         new TSClientProtocol(
             syncTLClock,
-            TSClientProtocol,
             clientOptions
         ),
         webSocket);
