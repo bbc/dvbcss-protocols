@@ -33,7 +33,7 @@ currently being presented by the TV Device
 
 function TSClientProtocol (syncTLClock, options) {
   if (!(
-      syncTLClock instanceof CorrelatedClock &&
+      typeof syncTLClock.setCorrelation == "function" &&
       typeof options.contentIdStem == "string" &&
       typeof options.timelineSelector == "string" &&
       !isNaN(options.tickrate)
