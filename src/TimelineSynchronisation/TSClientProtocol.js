@@ -6,8 +6,9 @@ var ControlTimestamp       = require("./ControlTimestamp");
 var PresentationTimestamp  = require("./PresentationTimestamp");
 var PresentationTimestamps = require("./PresentationTimestamps");
 
-var Correlation     = require("dvbcss-clocks").Correlation;
-var CorrelatedClock = require("dvbcss-clocks").CorrelatedClock;
+var clocks          = require("dvbcss-clocks");
+var Correlation     = clocks.Correlation;
+var CorrelatedClock = clocks.CorrelatedClock;
 
 var WeakMap = (typeof window !== "undefined" && window.WeakMap) || require('weak-map');
 var PRIVATE = new WeakMap();
