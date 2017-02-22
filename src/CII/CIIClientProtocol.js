@@ -25,7 +25,7 @@ function CIIClientProtocol (clientOptions) {
   var priv = PRIVATE.get(this);
 
   Object.defineProperty(this, "CIIChangeCallback", {value: clientOptions.callback});
- 
+
 }
 
 inherits(CIIClientProtocol, events.EventEmitter);
@@ -75,7 +75,7 @@ CIIClientProtocol.prototype.handleMessage = function (msg) {
 //    console.log("changemask: " + changemask);
 
     if ((changemask > 0)  && (typeof this.CIIChangeCallback !='undefined'))    {
-    	this.CIIChangeCallback(receivedCII, changemask);    	
+    	this.CIIChangeCallback(receivedCII, changemask);
     }
     priv.lastCII = receivedCII;
 

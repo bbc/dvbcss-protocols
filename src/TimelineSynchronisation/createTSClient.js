@@ -1,5 +1,5 @@
 var WebSocketAdaptor = require("../SocketAdaptors/WebSocketAdaptor");
-var WallClockClientProtocol = require("./TSClientProtocol");
+var TSClientProtocol = require("./TSClientProtocol");
 
 /**
  * @alias module:sync-protocols/TimelineSynchronisation.createTSClient
