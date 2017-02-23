@@ -106,7 +106,8 @@ TSClientProtocol.prototype.handleMessage = function (msg) {
     var isAvailable = (cts.contentTime !== null);
 
     if (isAvailable) {
-      var correlation = new Correlation(cts.wallClockTime, cts.contentTime);
+      var correlation = new Correlation(syncTLClock,parent.fromNanos(cts.wallClockTime), cts.contentTime);
+      console.log("TSClientProtocol.prototype.handleMessage {" + correlation.parentTime + " , " + correlation.childTime + "}");
       var speed = cts.timelineSpeedMultiplier;
 
       if (!syncTLClock.availabilityFlag || syncTLClock.isChangeSignificant(correlation, speed, 0.010)) {
