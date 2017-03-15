@@ -40,11 +40,11 @@ module.exports = {
       ControlTimestamp :             require ("./TimelineSynchronisation/ControlTimestamp"),
       TSSetupMessage :               require ("./TimelineSynchronisation/TSSetupMessage"),
       TSClientProtocol :             require ("./TimelineSynchronisation/TSClientProtocol"),
-      createTSClient :               require ("./TimelineSynchronisation/createTSClient"), 
+      createTSClient :               require ("./TimelineSynchronisation/createTSClient"),
     },
 
     CII : {
-    	CIIMessage :       			 require ("./CII/CIIMessage"),
+    	CIIMessage :       			       require ("./CII/CIIMessage"),
         TimelineProperties :         require ("./CII/TimelineProperties"),
         CIIClientProtocol :          require ("./CII/CIIClientProtocol"),
         createCIIClient :            require ("./CII/createCIIClient")
@@ -58,4 +58,15 @@ module.exports = {
         WebSocketAdaptor:            require("./SocketAdaptors/WebSocketAdaptor"),
         UdpAdaptor:                  require("./SocketAdaptors/UdpAdaptor"),
     },
+
+    /**
+     * Sub-module providing the SyncRelay protocol. See [WallClock]{@link module:sync-protocols/SyncRelay}
+     * @see module:sync-protocols/SyncRelay
+     */
+    SyncRelay: {
+        SyncREQMessage:            require("./SyncRelay/SyncREQMessage"),
+        SyncRESPMessage:           require("./SyncRelay/SyncRESPMessage"),
+    },
+
+
 };

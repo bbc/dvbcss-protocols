@@ -56,4 +56,8 @@ ControlTimestamp.deserialise = function (jsonVal) {
   );
 }
 
+ControlTimestamp.prototype.toJson = function() {
+  return this.serialise.call(this);
+};
+
 module.exports = ControlTimestamp;

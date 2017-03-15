@@ -16,17 +16,17 @@ Note that NPM install might fail if NPM is not able to access your credentials f
 project repository.
 
 (NPM 'link' is no longer required for project private packages. This is
-because the dependency entry in package.json now points directly to the 
+because the dependency entry in package.json now points directly to the
 repository URL)
 
 
 ### 2. EITHER: Build for the browser
 
-If you wish to build it into a single JS file suitable for the browser (i.e. 
+If you wish to build it into a single JS file suitable for the browser (i.e.
 for including in a webpage) then do this:
 
     $ grunt
-    
+
 Resulting library is placed in `dist/browser/sync-protocols.js`.
 
 ### OR: use in another nodejs project
@@ -35,7 +35,7 @@ Alternatively, use this as a dependency in the package.json of your own
 project. First make it available to your local npm installation.
 
     $ npm link
-    
+
 Make sure it is included as a dependency in package.json:
 
     ...
@@ -44,7 +44,7 @@ Make sure it is included as a dependency in package.json:
         "sync-protocols": "^0.0.1",
         ...
     }
-    
+
 Ask npm to link it:
 
     $ npm link sync-protocols
@@ -59,7 +59,7 @@ JSDoc documentation can be built:
 
 Documentation is generated and output as HTML into the `doc` subfolder.
 
-    
+
 ## Unit tests
 
 Unit tests are written using the jasmine unit test framework.
@@ -71,24 +71,24 @@ Unit tests are written using the jasmine unit test framework.
 
 Creating a wall clock client using JSON format messages via a WebSocket
 connection:
-    
+
     var WebSocket = require('ws');
-    
+
     var clocks = require("dvbcss-clocks");
     var SyncProtocols = require("sync-protocols");
     var createClient = SyncProtocols.WallClock.createJsonWebSocketClient;
-    
+
     var ws = new WebSocket("ws://127.0.0.1:7681/wall-clock-server");
-    
+
     var root = new clocks.DateNowClock();
     var wallClock = new clocks.CorrelatedClock(root);
-    
+
     var client = createClient(ws, wallClock);
-    
+
 Then at some point later, just close the WebSocket connection to stop the client:
 
     ws.close();
-    
+
 There are also functions to create other variants:
 
 * `SyncProtocols.WallClock.createJsonWebSocketClient` - JSON protocol via WebSocket
@@ -98,7 +98,7 @@ There are also functions to create other variants:
 
 ## Library architecture
 
-The library is designed to be modular and allow protocols (clients/servers) 
+The library is designed to be modular and allow protocols (clients/servers)
 to be separated from on-the-wire message formats (Json/Binary etc)
 and the type of network transport (UDP/Websockets etc).
 
@@ -112,7 +112,7 @@ emit a `send` event to request a message be sent.
 Internally they use objects represent protocol messages in the abstract:
 
 * `SyncProtocols.WallClock.WallClockMessage` - object representing a Wall Clock protocol message
- 
+
 But the protocol handler also uses serialisers to *pack* or *unpack* then to/from on-the-wire formats:
 
 * `SyncProtocols.WallClock.BinarySerialiser` - packs/unpacks to the binary format used in [DVB CSS](http://www.etsi.org/deliver/etsi_ts/103200_103299/10328602/01.01.01_60/ts_10328602v010101p.pdf)
