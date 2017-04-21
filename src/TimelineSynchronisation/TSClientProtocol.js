@@ -107,7 +107,6 @@ TSClientProtocol.prototype.handleMessage = function (msg) {
 
     if (isAvailable) {
       var correlation = new Correlation(syncTLClock.parent.fromNanos(cts.wallClockTime), cts.contentTime);
-      console.log("received SyncTL correlation: {" + correlation.parentTime + " , " + correlation.childTime + "}");
       var speed = cts.timelineSpeedMultiplier;
 
       if (!syncTLClock.availabilityFlag || syncTLClock.isChangeSignificant(correlation, speed, 0.010)) {
