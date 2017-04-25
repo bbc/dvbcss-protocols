@@ -69,8 +69,7 @@ CIIClientProtocol.prototype.handleMessage = function (msg) {
   {
     if (typeof priv.lastCII === "undefined")
     	changemask |= CIIObject.prototype.CIIChangeMask.FIRST_CII_RECEIVED;
-    else
-      changemask = receivedCII.compare(priv.lastCII);
+    changemask |= receivedCII.compare(priv.lastCII || new CIIObject());
 
 //    console.log("changemask: " + changemask);
 

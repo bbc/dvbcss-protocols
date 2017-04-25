@@ -59,7 +59,7 @@ var WallClockClientProtocol = function(wallClock, serialiser, options) {
     priv.requestInterval = (options.requestInterval>0)?options.requestInterval:1000; // default
     priv.followupTimeout = (options.followupTimeout>0)?options.followupTimeout:3000; // default
 
-    priv.log = (typeof options.logFunction === "function") ? options.logFunction : console.log.bind(console);
+    priv.log = (typeof options.logFunction === "function") ?  options.logFunction : function() {};
 
     priv.log("WallClockClientProtocol constructor: ", options);
     priv.dest = (options.dest)?options.dest:null;
