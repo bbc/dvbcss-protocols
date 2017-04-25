@@ -59,14 +59,4 @@ module.exports = {
         UdpAdaptor:                  require("./SocketAdaptors/UdpAdaptor"),
     },
 
-    /**
-     * Sub-module providing the SyncRelay protocol. See [WallClock]{@link module:sync-protocols/SyncRelay}
-     * @see module:sync-protocols/SyncRelay
-     */
-    SyncRelay: {
-        SyncREQMessage:            require("./SyncRelay/SyncREQMessage"),
-        SyncRESPMessage:           require("./SyncRelay/SyncRESPMessage"),
-    },
-
-
 };

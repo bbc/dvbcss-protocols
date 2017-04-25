@@ -27,4 +27,16 @@ PresentationTimestamp.getFromObj = function (o) {
   return new PresentationTimestamp(o.contentTime, o.wallClockTime);
 }
 
+/**
+ * Compare this PresentationTimestamp with another to check if they are the same.
+ * @param {PresentationTimestamp} obj - another PresentationTimestamp to compare with.
+ * @returns {boolean} True if this PresentationTimestamp represents the same PresentationTimestamp as the one provided.
+ */
+PresentationTimestamp.prototype.equals = function(obj) {
+
+    return this.contentTime === obj.contentTime &&
+        this.wallClockTime === obj.wallClockTime;
+};
+
+
 module.exports = PresentationTimestamp;
