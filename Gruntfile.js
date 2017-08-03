@@ -114,7 +114,7 @@ module.exports = function(grunt) {
     
     jsdoc : {
         dist : {
-            src: ['README.md', 'src/**/*.js', 'test/**/*.js'],
+            src: ['README.md', 'package.json', 'src/**/*.js', 'test/**/*.js'],
             options: {
                 destination: 'doc'
             }
@@ -134,7 +134,8 @@ module.exports = function(grunt) {
   // default do nothing
   grunt.registerTask('default', ['build', 'watch']);
   
-  grunt.registerTask('test', ['build', 'clean:tests', 'webpack:specs', 'jasmine', 'watch:tests']);
+  grunt.registerTask('test', ['build', 'clean:tests', 'webpack:specs', 'jasmine:tests']);
+  grunt.registerTask('test-watch', ['test', 'watch:tests']);
   grunt.registerTask('build', ['clean:dist', 'clean:build', 'copy:src', 'webpack:lib_browser', 'webpack:lib_node']);
   
 };

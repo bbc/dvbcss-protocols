@@ -1,26 +1,40 @@
 {
   "name": "sync-protocols",
   "version": "0.0.1",
-  "description": "Library implementing client and server code for sync protocols",
+  "description": "Javascript library implementing client and server code for DVB CSS sync protocols",
   "main": "src/main_node.js",
   "directories": {
     "example": "examples"
   },
-  "scripts": {},
-  "author": {
-    "name": "Matt Hammond",
-    "email": "matt.hammond@bbc.co.uk"
+  "scripts": {
+      "test": "grunt test",
+      "prepare": "grunt build"
   },
+  "author": {
+    "name": "British Broadcasting Corporation",
+    "url": "http://www.bbc.co.uk/rd"
+  },
+  "files": [
+      "src/**/*.js",
+      "tests/**/*.js",
+      "AUTHORS",
+      "package.json",
+      "Gruntfile.js",
+      "README.md",
+      "dist",
+      "examples/**/*"
+  ],
   "license": "UNLICENSED",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.6.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-copy": "^0.8.2",
-    "grunt-contrib-jasmine": "^0.9.2",
-    "grunt-contrib-watch": "^0.6.1",
+    "grunt-contrib-jasmine": "^1.0.3",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-jsdoc": "^2.1.0",
-    "grunt-webpack": "^1.0.11",
-    "webpack": "^1.12.3"
+    "grunt-webpack": "^1.0.14",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "dvbcss-clocks": "git+ssh://git@gitlab-ext.irt.de/2-immerse/dvbcss-clocks.git#master",
