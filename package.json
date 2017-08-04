@@ -37,7 +37,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-    "dvbcss-clocks": "git+ssh://git@gitlab-ext.irt.de/2-immerse/dvbcss-clocks.git#master",
+    "dvbcss-clocks": "^0.0.4",
     "events": "^1.1.1",
     "inherits": "^2.0.1",
     "js-object-clone": "^0.4.2",
