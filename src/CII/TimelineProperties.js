@@ -55,4 +55,15 @@ TimelineProperties.deserialise = function (jsonVal) {
   return new TimelineProperties (o.timelineSelector, o.unitsPerTick, o.unitsPerSecond, o.accuracy);
 };
 
+TimelineProperties.prototype.equals = function(obj) {
+    return obj instanceof Object &&
+        this.timelineSelector === obj.timelineSelector &&
+        (this.unitsPerTick === obj.unitsPerTick ||
+            (isNaN(this.unitsPerTick) && isNaN(obj.unitsPerTick))) &&
+        (this.unitsPerSecond === obj.unitsPerSecond ||
+            (isNaN(this.unitsPerSecond) && isNaN(obj.unitsPerSecond))) &&
+        (this.accuracy === obj.accuracy ||
+            (isNaN(this.accuracy) && isNaN(obj.accuracy)))
+};
+
 module.exports = TimelineProperties;

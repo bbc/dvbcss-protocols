@@ -9,7 +9,7 @@ var TimelineProperties = require("./TimelineProperties");
  */
 var CIIMessage = function(protocolVersion, mrsUrl, contentId, contentIdStatus, presentationStatus, wcUrl, tsUrl, timelines) {
 
-  const self = this;
+  var self = this;
   Object.defineProperty(self, "protocolVersion",    { enumerable: true, value: protocolVersion});
   Object.defineProperty(self, "mrsUrl",             { enumerable: true, value: mrsUrl });
   Object.defineProperty(self, 'contentId',          { enumerable: true, value: contentId });
@@ -31,7 +31,7 @@ CIIMessage.prototype.serialise = function () {
 /**
  * @returns {PresentationTimestamps} actual, earliest and latest presentation timestamps from a JSON formatted string
  */
-CIIMessage.prototype.deserialise = function (jsonVal) {
+CIIMessage.deserialise = function (jsonVal) {
     // coerce from arraybuffer,if needed
     if (jsonVal instanceof ArrayBuffer) {
         jsonVal = String.fromCharCode.apply(null, new Uint8Array(jsonVal));
@@ -55,10 +55,10 @@ CIIMessage.prototype.deserialise = function (jsonVal) {
   }
   return new CIIMessage (o.protocolVersion, o.msrUrl, o.contentId, o.contentIdStatus, o.presentationStatus, o.wcUrl, o.tsUrl, myTimelines);
 
-}
+};
 
 // FLAGS
-CIIMessage.prototype.CIIChangeMask = {
+CIIMessage.CIIChangeMask = CIIMessage.prototype.CIIChangeMask = {
 	FIRST_CII_RECEIVED:          (1 << 0), // 0001
 	MRS_URL_CHANGED:             (1 << 1),
 	CONTENTID_CHANGED:           (1 << 2),
@@ -67,32 +67,38 @@ CIIMessage.prototype.CIIChangeMask = {
 	  WC_URL_CHANGED:              (1 << 5),
 	  TS_URL_CHANGED:              (1 << 6),
 	  TIMELINES_CHANGED:           (1 << 7)
-}
+};
 
+/**
+ * Checks if two CII Message objects are equivalent
+ * by checking if all CII properties match exactly.
+ * @param {CIIMessage} obj
+ * @returns {Boolean} Truthy if the properties of both CIIMessage objects  are equal.
+ */
+CIIMessage.prototype.equals = function(obj) {
+    try {
+        return typeof obj === "object" &&
+            this.protocolVersion === obj.protocolVersion &&
+            this.mrsUrl === obj.mrsUrl &&
+            this.contentId === obj.contentId &&
+            this.contentIdStatus === obj.contentIdStatus &&
+            this.presentationStatus === obj.presentationStatus &&
+            this.wcUrl === obj.wcUrl &&
+            this.tsUrl === obj.tsUrl &&
+            this.timelines === obj.timelines || (
+                this.timelines instanceof Array &&
+                obj.timelines instanceof Array &&
+                this.timelines.length === obj.timelines.length &&
+                this.timelines.map( function(e, i) {
+                    return e.equals(obj.timelines[i]);
+                }).reduce(  function(x,y) {
+                    return x && y;
+                }, true)
+            );
 
-
-CIIMessage.prototype.equal = function(x, y) {
-
-    if (typeof x !== typeof y) return false;
-    if (x instanceof Array && y instanceof Array && x.length !== y.length) return false;
-        
-    if (typeof x === 'object') {
-        for (var p in x) 
-        	if (x.hasOwnProperty(p)){
-	        	
-	        	if (typeof x[p] === 'function' && typeof y[p] === 'function') continue;
-	            if (x[p] instanceof Array && y[p] instanceof Array && x[p].length !== y[p].length) return false;
-	            if (typeof x[p] !== typeof y[p]) return false;
- 	            
-	            if (typeof x[p] === 'object' && typeof y[p] === 'object') { 
-	            	if (!this.equal(x[p], y[p])) 
-	            		return false; 
-	            } 
-	            else
-	            	if (x[p] !== y[p]) return false;
-        }
-    } else return x === y;
-    return true;
+    } catch (e) {
+        return false;
+    }
 };
 
 
