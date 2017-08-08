@@ -9,8 +9,8 @@ function AdaptorWrapper(ciiClientProtocol, adaptor) {
 	events.EventEmitter.call(this)
 
 	var self = this
-	ciiClientProtocol.on("change", function(cii, mask) {
-		self.emit("change", cii, mask);
+	ciiClientProtocol.on("change", function(cii, changes, mask) {
+		self.emit("change", cii, changes, mask);
 	});
 	
 	this.stop = function() { return adaptor.stop() }

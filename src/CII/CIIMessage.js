@@ -66,7 +66,31 @@ CIIMessage.CIIChangeMask = CIIMessage.prototype.CIIChangeMask = {
 	  PRES_STATUS_CHANGED:         (1 << 4),
 	  WC_URL_CHANGED:              (1 << 5),
 	  TS_URL_CHANGED:              (1 << 6),
-	  TIMELINES_CHANGED:           (1 << 7)
+	  TIMELINES_CHANGED:           (1 << 7),
+      PROTOCOL_VERSION_CHANGED:    (1 << 8)
+};
+
+
+var CII_KEYS = [
+    "protocolVersion",
+    "mrsUrl",
+    "contentId",
+    "contentIdStatus",
+    "presentationStatus",
+    "tsUrl",
+    "wcUrl",
+    "timelines"
+];
+
+var CHANGE_MASKS = {
+    "protocolVersion" : CIIMessage.CIIChangeMask.PROTOCOL_VERSION_CHANGED,
+    "mrsUrl" : CIIMessage.CIIChangeMask.MRS_URL_CHANGED,
+    "contentId" : CIIMessage.CIIChangeMask.CONTENTID_CHANGED,
+    "contentIdStatus" : CIIMessage.CIIChangeMask.CONTENTID_STATUS_CHANGED,
+    "presentationStatus" : CIIMessage.CIIChangeMask.PRES_STATUS_CHANGED,
+    "tsUrl" : CIIMessage.CIIChangeMask.WC_URL_CHANGED,
+    "wcUrl" : CIIMessage.CIIChangeMask.TS_URL_CHANGED,
+    "timelines" : CIIMessage.CIIChangeMask.TIMELINES_CHANGED
 };
 
 /**
@@ -85,72 +109,88 @@ CIIMessage.prototype.equals = function(obj) {
             this.presentationStatus === obj.presentationStatus &&
             this.wcUrl === obj.wcUrl &&
             this.tsUrl === obj.tsUrl &&
-            this.timelines === obj.timelines || (
-                this.timelines instanceof Array &&
-                obj.timelines instanceof Array &&
-                this.timelines.length === obj.timelines.length &&
-                this.timelines.map( function(e, i) {
-                    return e.equals(obj.timelines[i]);
-                }).reduce(  function(x,y) {
-                    return x && y;
-                }, true)
-            );
+            timelinesEqual(this.timelines, obj.timelines);
 
     } catch (e) {
         return false;
     }
 };
 
+function timelinesEqual(tA, tB) {
+    return tA === tB || (
+        tA instanceof Array &&
+        tB instanceof Array &&
+        tA.length === tB.length &&
+        tA.map( function(e, i) {
+            return e.equals(tB[i]);
+        }).reduce(  function(x,y) {
+            return x && y;
+        }, true)
+    );
+}
 
-CIIMessage.prototype.compare = function (anotherCII)
+
+CIIMessage.prototype.compare = function (anotherCII, retChanges)
 {
     var changemask = 0;
+    var name, i;
+    retChanges = retChanges === undefined ? {} : retChanges;
+    
+    for(i=0; i<CII_KEYS.length; i++) {
+        name=CII_KEYS[i];
+        if (anotherCII[name] === undefined) {
+            retChanges[name] = false;
 
-    if (this.mrsUrl){
-	    if (this.mrsUrl !== anotherCII.mrsUrl) changemask |= CIIMessage.prototype.CIIChangeMask.MRS_URL_CHANGED;
-    }
-    
-//    console.log(anotherCII.contentId);
-//    console.log(this.contentId);
-    
-    if (typeof this.contentId !='undefined'){
-    	 if (this.contentId !== anotherCII.contentId) changemask |= CIIMessage.prototype.CIIChangeMask.CONTENTID_CHANGED;
-    }
-   
-    if (typeof this.contentIdStatus != 'undefined'){
-    	if (this.contentIdStatus !== anotherCII.contentIdStatus) changemask |= CIIMessage.prototype.CIIChangeMask.CONTENTID_STATUS_CHANGED;
-    }
-    
-    if (typeof this.presentationStatus!='undefined') {
-    	 if (this.presentationStatus !== anotherCII.presentationStatus)
-    	      changemask |= CIIMessage.prototype.CIIChangeMask.PRES_STATUS_CHANGED;
-    }
-    
-    if (typeof this.wcUrl!='undefined') {
-	    if (this.wcUrl !== anotherCII.wcUrl)
-	      changemask |= CIIMessage.prototype.CIIChangeMask.WC_URL_CHANGED;
-    }
-    
-    if (typeof this.tsUrl!='undefined') {
-	    if (this.tsUrl !== anotherCII.tsUrl)
-	      changemask |= CIIMessage.prototype.CIIChangeMask.TS_URL_CHANGED;
-    }
-    
-    if (typeof this.timelines!='undefined') {
-        if (!(this.timelines instanceof Array) ||
-            !(anotherCII.timelines instanceof Array) ||
-            this.timelines.length !== anotherCII.timelines.length ||
-            !this.timelines.map( function(e, i) {
-                return e.equals(anotherCII.timelines[i]);
-            }).reduce(  function(x,y) {
-                return x && y;
-            }, true)
-        ) {
-            changemask |= CIIMessage.prototype.CIIChangeMask.TIMELINES_CHANGED;
+        } else {
+            if (name === "timelines") {
+                retChanges[name] = !timelinesEqual(this[name], anotherCII[name]);
+            } else {
+                retChanges[name] = anotherCII[name] !== this[name];
+            }
+            
+            if (retChanges[name]) {
+                changemask |= CHANGE_MASKS[name];
+            }
+            
         }
     }
-
     return changemask;
-}
+};
+
+
+/**
+ * Merge properties of this CIIMessage with the supplied CIIMessage.
+ * The returned CIIMessage contains all the properties from both. If
+ * a property is undefined in the supplied CIIMessage then its value from this
+ * message is preserved. If a property is defined in the supplied CIIMessage
+ * then that value is taken and the one from this message is ignored.
+ *
+ * @param {CIIMessage} newerCII whose defined properties override those of the existing CIIMessage.
+ * @return {CIIMessage} that is the result of the merge.
+ */ 
+CIIMessage.prototype.merge = function (newerCII) {
+    var merged = {};
+    var i, key;
+    
+    for(i=0; i<CII_KEYS.length; i++) {
+        key = CII_KEYS[i];
+        if (newerCII[key] !== undefined) {
+            merged[key] = newerCII[key];
+        } else {
+            merged[key] = this[key];
+        }
+    }
+    
+    return new CIIMessage(
+        merged.protocolVersion,
+        merged.mrsUrl,
+        merged.contentId,
+        merged.contentIdStatus,
+        merged.presentationStatus,
+        merged.wcUrl,
+        merged.tsUrl,
+        merged.timelines
+    );
+};
 
 module.exports = CIIMessage;

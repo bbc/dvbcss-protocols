@@ -1,7 +1,7 @@
 var events = require("events");
 var inherits = require("inherits");
 
-var CIIObject = require("./CIIMessage");
+var CIIMessage = require("./CIIMessage");
 var WeakMap   = (typeof window !== "undefined" && window.WeakMap) || require('weak-map');
 var PRIVATE   = new WeakMap();
 
@@ -23,6 +23,8 @@ function CIIClientProtocol (clientOptions) {
   events.EventEmitter.call(this);
   PRIVATE.set(this, {});
   var priv = PRIVATE.get(this);
+  
+  priv.cii = new CIIMessage();
 
   if (clientOptions instanceof Object) {
       priv.CIIChangeCallback = clientOptions.callback
@@ -57,31 +59,30 @@ CIIClientProtocol.prototype.stop = function() {
  * @param {string} msg the control timestamp as defined in DVB CSS
  */
 CIIClientProtocol.prototype.handleMessage = function (msg) {
-
-
   var priv = PRIVATE.get(this);
-
-  var changemask = 0;
+  var changemask;
+  var changeNames = {};
 
 //  console.log("CIIClientProtocol.prototype.handleMessage() - received CII message: " + msg);
 
-   var receivedCII = CIIObject.deserialise(msg);
+   var receivedCII = CIIMessage.deserialise(msg);
 
   if (typeof receivedCII !== "undefined")
   {
-    if (typeof priv.lastCII === "undefined")
-    	changemask |= CIIObject.prototype.CIIChangeMask.FIRST_CII_RECEIVED;
-    changemask |= receivedCII.compare(priv.lastCII || new CIIObject());
+    changemask = priv.cii.compare(receivedCII, changeNames);
 
-//    console.log("changemask: " + changemask);
-
-    if ((changemask > 0) ) {
-        if (priv.CIIChangeCallback !== undefined) {
-        	priv.CIIChangeCallback(receivedCII, changemask);
-        }
-        this.emit("change", receivedCII, changemask);
+    if (priv.lastCII === undefined) {
+    	changemask |= CIIMessage.prototype.CIIChangeMask.FIRST_CII_RECEIVED;
     }
     priv.lastCII = receivedCII;
+    priv.cii = priv.cii.merge(receivedCII);
+
+    if ((changemask != 0) ) {
+        if (priv.CIIChangeCallback !== undefined) {
+        	priv.CIIChangeCallback(priv.cii, changemask);
+        }
+        this.emit("change", priv.cii, changeNames, changemask);
+    }
 
   }
 };
