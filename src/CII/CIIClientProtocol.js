@@ -24,7 +24,8 @@ function CIIClientProtocol (clientOptions) {
   PRIVATE.set(this, {});
   var priv = PRIVATE.get(this);
   
-  priv.cii = new CIIMessage();
+  // initial "state" assumed before messages are received.
+  priv.cii = new CIIMessage(null, null, null, null, null, null, null, null);
 
   if (clientOptions instanceof Object) {
       priv.CIIChangeCallback = clientOptions.callback
