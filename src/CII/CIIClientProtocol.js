@@ -20,11 +20,13 @@ var PRIVATE   = new WeakMap();
  */
 
 function CIIClientProtocol (clientOptions) {
- events.EventEmitter.call(this);
+  events.EventEmitter.call(this);
   PRIVATE.set(this, {});
   var priv = PRIVATE.get(this);
 
-  Object.defineProperty(this, "CIIChangeCallback", {value: clientOptions.callback});
+  if (clientOptions instanceof Object) {
+      priv.CIIChangeCallback = clientOptions.callback
+  }
 
 }
 
@@ -63,7 +65,7 @@ CIIClientProtocol.prototype.handleMessage = function (msg) {
 
 //  console.log("CIIClientProtocol.prototype.handleMessage() - received CII message: " + msg);
 
-   var receivedCII = CIIObject.prototype.deserialise(msg);
+   var receivedCII = CIIObject.deserialise(msg);
 
   if (typeof receivedCII !== "undefined")
   {
@@ -73,8 +75,11 @@ CIIClientProtocol.prototype.handleMessage = function (msg) {
 
 //    console.log("changemask: " + changemask);
 
-    if ((changemask > 0)  && (typeof this.CIIChangeCallback !='undefined'))    {
-    	this.CIIChangeCallback(receivedCII, changemask);
+    if ((changemask > 0) ) {
+        if (priv.CIIChangeCallback !== undefined) {
+        	priv.CIIChangeCallback(receivedCII, changemask);
+        }
+        this.emit("change", receivedCII, changemask);
     }
     priv.lastCII = receivedCII;
 

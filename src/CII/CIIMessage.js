@@ -137,8 +137,17 @@ CIIMessage.prototype.compare = function (anotherCII)
     }
     
     if (typeof this.timelines!='undefined') {
-	    if (!this.equal(this.timelines, anotherCII.timelines))
-	      changemask |= CIIMessage.prototype.CIIChangeMask.TIMELINES_CHANGED;
+        if (!(this.timelines instanceof Array) ||
+            !(anotherCII.timelines instanceof Array) ||
+            this.timelines.length !== anotherCII.timelines.length ||
+            !this.timelines.map( function(e, i) {
+                return e.equals(anotherCII.timelines[i]);
+            }).reduce(  function(x,y) {
+                return x && y;
+            }, true)
+        ) {
+            changemask |= CIIMessage.prototype.CIIChangeMask.TIMELINES_CHANGED;
+        }
     }
 
     return changemask;
