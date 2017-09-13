@@ -7,22 +7,22 @@
     "example": "examples"
   },
   "scripts": {
-      "test": "grunt test",
-      "prepare": "grunt build"
+    "test": "grunt test",
+    "prepare": "grunt build"
   },
   "author": {
     "name": "British Broadcasting Corporation",
     "url": "http://www.bbc.co.uk/rd"
   },
   "files": [
-      "src/**/*.js",
-      "tests/**/*.js",
-      "AUTHORS",
-      "package.json",
-      "Gruntfile.js",
-      "README.md",
-      "dist",
-      "examples/**/*"
+    "src/**/*.js",
+    "tests/**/*.js",
+    "AUTHORS",
+    "package.json",
+    "Gruntfile.js",
+    "README.md",
+    "dist",
+    "examples/**/*"
   ],
   "license": "UNLICENSED",
   "devDependencies": {
