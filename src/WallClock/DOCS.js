@@ -1,14 +1,15 @@
 /**
- * @module sync-protocols/WallClock
+ * @memberof sync-protocols
+ * @namespace WallClock
  * @description
  * Classes, methods and objects implementing the Wall clock synchronisation protocol.
  *
  * <p>The simplest way to use them is to create the network connection, and {CorrelatedClock}
  * to represent the Wall Clock, then pass both to the appropriate factory function:
  * <ul>
- *   <li> [createBinaryUdpClient]{@link module:sync-protocols/WallClock.createBinaryUdpClient}
- *   <li> [createBinaryWebSocketClient]{@link module:sync-protocols/WallClock.createBinaryWebSocketClient}
- *   <li> [createJsonWebSocketClient]{@link module:sync-protocols/WallClock.createJsonWebSocketClient}
+ *   <li> [createBinaryUdpClient(...)]{@link sync-protocols.WallClock.createBinaryUdpClient}
+ *   <li> [createBinaryWebSocketClient(...)]{@link sync-protocols.WallClock.createBinaryWebSocketClient}
+ *   <li> [createJsonWebSocketClient(...)]{@link sync-protocols.WallClock.createJsonWebSocketClient}
  * </ul>
  *
  * @example

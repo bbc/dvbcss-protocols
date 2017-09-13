@@ -1,7 +1,7 @@
 var PresentationTimestamp = require("./PresentationTimestamp");
 
 /**
- * @alias module:sync-protocols/TimelineSynchronisation.PresentationTimestamps
+ * @memberof sync-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing actual, earliest and latest presentation timestamps sent from a synchronistion client to the MSAS.

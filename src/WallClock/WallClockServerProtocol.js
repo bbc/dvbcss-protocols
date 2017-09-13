@@ -10,17 +10,17 @@ require("js-object-clone");
 
 
 /**
- * @alias module:sync-protocols/WallClock.WallClockServerProtocol
+ * @memberof sync-protocols.WallClock
  * @class
  * @description
  *
  * Protocol handler that implements a Wall Clock Server .
  *
  * <p>Emits a {@link event:send} to send messages, and is passed received
- * messages by calling [handleMessage()]{@link WallClockClientProtocol#handleMessage}
+ * messages by calling [handleMessage()]{@link sync-protocols.WallClock.WallClockClientProtocol#handleMessage}
  *
  * <p>Is independent of the underlying type of connection (e.g. WebSocket / UDP)
- * and of the message format used on the wire. You provide a {ProtocolSerialiser}
+ * and of the message format used on the wire. You provide a {@link ProtocolSerialiser}
  *
  * <p>Message payloads for sending or receiving are accompanied by opaque "destination"
  * routing data that this class uses as an opaque handle for the server being interacted

@@ -9,7 +9,7 @@ var WeakMap = (typeof window !== "undefined" && window.WeakMap) || require('weak
 var PRIVATE = new WeakMap();
 
 /**
- * @alias module:sync-protocols/WallClock.WallClockClientProtocol
+ * @memberof sync-protocols.WallClock
  * @class
  * @description
  *

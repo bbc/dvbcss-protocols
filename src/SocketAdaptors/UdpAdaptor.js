@@ -1,6 +1,6 @@
 /**
+ * @memberof sync-protocols.SocketAdaptors
  * @class
- * @alias module:sync-protocols/SocketAdaptors.UdpAdaptor
  * @description
  * Adaptor that manages a bound UDP datagram socket and interfaces it to a protocol handler.
  *

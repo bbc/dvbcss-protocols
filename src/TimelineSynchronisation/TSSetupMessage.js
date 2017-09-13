@@ -1,5 +1,5 @@
 /**
- * @alias module:sync-protocols/TimelineSynchronisation.TSSetupMessage
+ * @memberof sync-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing the setup message for the timeline synchronistation protocol that is sent from the client to the server initially. See ETSI TS XXX

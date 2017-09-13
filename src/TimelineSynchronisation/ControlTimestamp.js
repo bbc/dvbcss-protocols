@@ -1,5 +1,5 @@
 /**
- * @alias module:sync-protocols/TimelineSynchronisation.ControlTimestamp
+ * @memberof sync-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing a control timestamp to correlate media timelines with wall clock times.
@@ -26,7 +26,7 @@ var ControlTimestamp = function(contentTime, wallClockTime, timelineSpeedMultipl
 }
 
 /**
- * @return a string representation of this ControlTimestamp as defined by ETSI TS XXX XXX clause 5.7.5
+ * @return a string representation of this ControlTimestamp as defined by ETSI TS 103 286 clause 5.7.5
  */
 ControlTimestamp.prototype.serialise = function () {
   return JSON.stringify(
@@ -39,7 +39,7 @@ ControlTimestamp.prototype.serialise = function () {
 }
 
 /**
-  @returns {ControlTimestamp} Creates a ControlTimestamp from a JSON formatted string as defined by ETSI TS XXX clause 5.7.5
+  @returns {ControlTimestamp} Creates a ControlTimestamp from a JSON formatted string as defined by ETSI TS 103 286 clause 5.7.5
 */
 ControlTimestamp.deserialise = function (jsonVal) {
     // coerce from arraybuffer,if needed

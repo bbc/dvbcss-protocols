@@ -3,7 +3,7 @@ var WallClockServerProtocol = require("./WallClockServerProtocol");
 var BinarySerialiser = require("./BinarySerialiser");
 
 /**
- * @alias module:sync-protocols/WallClock.createBinaryUdpServer
+ * @memberof sync-protocols.WallClock
  * @description
  * Factory function that creates a Wall Clock server that uses a UDP socket
  * and sends/receives protocol messages in binary format.
@@ -14,7 +14,7 @@ var BinarySerialiser = require("./BinarySerialiser");
  * @param {Number} protocolOptions.precision Precision of server's WallClock in seconds and fractions of a second
  * @param {String} protocolOptions.maxFreqError max frequency error of server's WallClock in ppm (parts per million)
  * @param {Number} protocolOptions.followup Flag set to true if the WallClock server will followup responses to requests with more accurate values for timestamps
- * @returns {module:sync-protocols/SocketAdaptors.UdpAdaptor} The UDP adaptor wrapping the whole server
+ * @returns {sync-protocols.SocketAdaptors.UdpAdaptor} The UDP adaptor wrapping the whole server
  */
 
 

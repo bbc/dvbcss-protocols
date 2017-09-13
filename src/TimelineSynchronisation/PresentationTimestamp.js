@@ -1,5 +1,5 @@
 /**
- * @alias module:sync-protocols/TimelineSynchronisation.PresentationTimestamp
+ * @memberof sync-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing a presentation timestamp to correlate media timelines with wall clock times.

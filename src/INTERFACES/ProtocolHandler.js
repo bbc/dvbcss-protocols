@@ -32,9 +32,8 @@ ProtocolHandler.prototype.handleMessage = function(msg, source) { throw "Not imp
 
 /**
  * @event ProtocolHandler#send
- * @type object
  * @description
- * Event that a protocol handler should emit when it wishes to send a message.
+ * Protocol handler needs a message to be sent.
  * @param {String|Uint8Array} msg The message payload to send
  * @param {*} [routing] Expresses the routing/destination. Opaque handle. If not defined, then goes to default destination (if there is one)
  */

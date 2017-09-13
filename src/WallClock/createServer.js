@@ -1,5 +1,5 @@
 /**
- * @alias module:sync-protocols/WallClock.createServer
+ * @memberof sync-protocols.WallClock
  * @description
  * Factory function that creates a Wall Clock server.
  *

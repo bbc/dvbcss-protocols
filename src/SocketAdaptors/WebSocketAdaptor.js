@@ -1,6 +1,6 @@
 /**
+ * @memberof sync-protocols.SocketAdaptors
  * @class
- * @alias module:sync-protocols/SocketAdaptors.WebSocketAdaptor
  * @description
  * Adaptor that manages a websocket connection and interfaces it to a protocol handler.
  *

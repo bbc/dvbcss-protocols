@@ -2,15 +2,27 @@
  * @module sync-protocols
  * @description
  * Sync protocols for node.js (clients and servers) and the browser (clients only).
+ * It contains the following namespaces:
  *
+  * <ul>
+  *   <li> [CII]{@link sync-protocols.CII}
+  *   <li> [TimelineSynchronisation]{@link sync-protocols.TimelineSynchronisation}
+  *   <li> [WallClock]{@link sync-protocols.WallClock}
+  *   <li> [SocketAdaptors]{@link sync-protocols.SocketAdaptors}
+  * </ul>
+
  * <p>This is the top level module that you should "require":
  * @example
- * var SyncProtocols = require("sync-protocols");
+ * <caption>Importing this module and accessing the namespaces within it</caption
+ * var SyncProtocols = require("sync-protocols")
+ * var CII = SyncProtocols.CII
+ * var CII = SyncProtocols.TimelineSynchronisation
+ * var CII = SyncProtocols.WallClock
  */
 module.exports = {
     /**
-     * Sub-module providing the Wall Clock protocol. See [WallClock]{@link module:sync-protocols/WallClock}
-     * @see module:sync-protocols/WallClock
+     * Namespace containing the Wall Clock protocol implementation. See [WallClock]{@link sync-protocols.WallClock}
+     * @see sync-protocols.WallClock
      */
     WallClock: {
         createClient:                require("./WallClock/createClient"),
@@ -31,8 +43,8 @@ module.exports = {
 
 
     /**
-    * Sub-module providing the TimelineSynchronisation protocol. See [TimelineSynchronisation]{@link module:sync-protocols/TimelineSynchronisation}
-    * @see  module:sync-protocols/TimelineSynchronisation
+    * Namespace containing the TimelineSynchronisation protocol implementation. See [TimelineSynchronisation]{@link sync-protocols.TimelineSynchronisation}
+    * @see  sync-protocols.TimelineSynchronisation
     */
     TimelineSynchronisation : {
       PresentationTimestamps :       require ("./TimelineSynchronisation/PresentationTimestamps"),
@@ -43,16 +55,20 @@ module.exports = {
       createTSClient :               require ("./TimelineSynchronisation/createTSClient"),
     },
 
+    /**
+    * Namespace containing the CII protocol implementation. See [CII]{@link sync-protocols.CII}
+    * @see sync-protocols.CII
+    */
     CII : {
-    	CIIMessage :       			       require ("./CII/CIIMessage"),
+    	CIIMessage :                 require ("./CII/CIIMessage"),
         TimelineProperties :         require ("./CII/TimelineProperties"),
         CIIClientProtocol :          require ("./CII/CIIClientProtocol"),
         createCIIClient :            require ("./CII/createCIIClient")
     },
 
     /**
-     * Sub-module providing adaptors between network socket objects and the protocol implementations. See [WallClock]{@link module:sync-protocols/SocketAdaptors}
-     * @see module:sync-protocols/SocketAdaptors
+     * Namespace containing adaptors between network socket objects and the protocol implementations. See [WallClock]{@link sync-protocols.SocketAdaptors}
+     * @see sync-protocols.SocketAdaptors
      */
     SocketAdaptors: {
         WebSocketAdaptor:            require("./SocketAdaptors/WebSocketAdaptor"),

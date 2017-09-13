@@ -12,8 +12,9 @@ var CorrelatedClock = clocks.CorrelatedClock;
 
 var WeakMap = (typeof window !== "undefined" && window.WeakMap) || require('weak-map');
 var PRIVATE = new WeakMap();
+
 /**
- * @alias module:sync-protocols/TimelineSynchronisation.TSClientProtocol
+ * @memberof sync-protocols.TimelineSynchronisation
  * @class
  * @description Implementation of the client part of the timeline synchroniation protocol as defined in DVB CSS.
    With start() the protocol is initiated. The CorrelatedClock object passed into the constructor is updated with ControlTimestamps
@@ -22,7 +23,7 @@ var PRIVATE = new WeakMap();
  * @implements ProtocolHandler
  *
  * @constructor
- * @param {CorrelatedClock} syncTLClock a "fresh" CorrelatedClock
+ * @param {CorrelatedClock} syncTLClock The clock to represent the timeline. It will be updated according to the timestamp messages received.
  * @param {Object} options Options for this TSClientProtocol handler
  * @param {string} options.contentIdStem The Content Identifier stem is considered to match the timed content currently being presented by the TV Device
  * @param {string} options.timelineSelector The Timeline Selector describes the type and location of timeline signalling to be derived from the Timed Content

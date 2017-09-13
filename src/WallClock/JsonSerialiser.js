@@ -1,7 +1,7 @@
 var WallClockMessage = require("./WallClockMessage");
 
 /**
- * @alias module:sync-protocols/WallClock.JsonSerialiser
+ * @memberof sync-protocols.WallClock
  * @description
  * JsonSerialiser message serialiser/deserialiser for Wall Clock protocol messages
  * 

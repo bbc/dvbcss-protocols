@@ -1,11 +1,20 @@
 var TimelineProperties = require("./TimelineProperties");
+
 /**
- * @alias module:sync-protocols/CII.cii
+ * @memberof sync-protocols.CII
  * @class
  * @description
- * Object representing a CII message sent from the MSAS to the synchronistion clients.
+ * Object representing a CII message sent from the MSAS to the synchronisation clients.
  *
  * @constructor
+ * @param {String} [protocolVersion] The protocol version being used by the server or <code>undefined</code>.
+ * @param {?String} [mrsUrl] The URL of an MRS server known to the server, or <code>null</code> or <code>undefined</code>.
+ * @param {?String} [contentId] Content identifier URI, or <code>undefined</code>.
+ * @param {?String} [contentIdStatus] Content identifier status, or <code>undefined</code>
+ * @param {?String} [presentationStatus] Presentation status as a string, e.g. "okay", or <code>undefined</code>
+ * @param {?String} [wcUrl] CSS-WC server endpoint URL in the form “udp://<host>:<port>”, or <code>undefined</code>.
+ * @param {?String} [tsUrl] CSS-TS server endpoint WebSocket URL, or <code>undefined</code>.
+ * @param {?Array.<TimelineProperties>} [timelines] Array of timeline property objects, or <code>undefined</code>.
  */
 var CIIMessage = function(protocolVersion, mrsUrl, contentId, contentIdStatus, presentationStatus, wcUrl, tsUrl, timelines) {
 
@@ -22,14 +31,17 @@ var CIIMessage = function(protocolVersion, mrsUrl, contentId, contentIdStatus, p
 
 
 /**
- * @returns {string} string representation of the CII as defined by ETSI CII XXX XXX clause 5.7.4
+ * Serialise to JSON
+ * @returns {String} JSON representation of this CII message as defined by ETSI TS 103 286 clause 5.6.7
  */
 CIIMessage.prototype.serialise = function () {
   return JSON.stringify(this);
-}
+};
 
 /**
- * @returns {PresentationTimestamps} actual, earliest and latest presentation timestamps from a JSON formatted string
+ * Parse a JSON representation of a CII message as defined by ETSI TS 103 286 clause 5.6.7.
+ * @param {String} jsonVal The CII message encoded as JSON.
+ * @returns {CIIMessage} with the same properties as the JSON§ passed as the argument
  */
 CIIMessage.deserialise = function (jsonVal) {
     // coerce from arraybuffer,if needed
@@ -57,17 +69,30 @@ CIIMessage.deserialise = function (jsonVal) {
 
 };
 
-// FLAGS
+/**
+ * A set of bit masks representing each property in a CII message. Used by ORing together to flag which properties have changed in [ciiChangedCallback()]{@link ciiChangedCallback}
+ * @readonly
+ * @enum {number}
+ */
 CIIMessage.CIIChangeMask = CIIMessage.prototype.CIIChangeMask = {
-	FIRST_CII_RECEIVED:          (1 << 0), // 0001
+    /** Mask for the bit that is set if this is the first CII message received */
+	FIRST_CII_RECEIVED:          (1 << 0),
+    /** Mask for the bit that is set if the "mrsUrl" property has changed */
 	MRS_URL_CHANGED:             (1 << 1),
+    /**  Mask for the bit that is set if the "contentId" property has changed */
 	CONTENTID_CHANGED:           (1 << 2),
-	  CONTENTID_STATUS_CHANGED:    (1 << 3),
-	  PRES_STATUS_CHANGED:         (1 << 4),
-	  WC_URL_CHANGED:              (1 << 5),
-	  TS_URL_CHANGED:              (1 << 6),
-	  TIMELINES_CHANGED:           (1 << 7),
-      PROTOCOL_VERSION_CHANGED:    (1 << 8)
+    /** Mask for the bit that is set if the "contentIdStatus" property has changed */
+	CONTENTID_STATUS_CHANGED:    (1 << 3),
+    /** Mask for the bit that is set if the "presentationStatus" property has changed */
+	PRES_STATUS_CHANGED:         (1 << 4),
+    /** Mask for the bit that is set if the "wcUrl" property has changed */
+	WC_URL_CHANGED:              (1 << 5),
+    /** Mask for the bit that is set if the "tsUrl" property has changed */
+	TS_URL_CHANGED:              (1 << 6),
+    /** Mask for the bit that is set if the "timelines" property has changed */
+	TIMELINES_CHANGED:           (1 << 7),
+    /** Mask for the bit that is set if the "protocolVersion" property has changed */
+    PROTOCOL_VERSION_CHANGED:    (1 << 8)
 };
 
 

@@ -21,14 +21,14 @@ inherits(AdaptorWrapper, events.EventEmitter);
 
 
 /**
- * @alias module:sync-protocols/CII.createJsonWebSocketClient
+ * @memberof sync-protocols.CII
  * @description
  * Factory function that creates a CII client that uses a WebSocket
  * and sends/receives protocol messages in JSON format.
  *
  * @param {WebSocket} webSocket A W3C WebSockets API compatible websocket connection object
  * @param {Object} clientOptions
- * @returns {module:sync-protocols/SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client, but with change event added
+ * @returns {sync-protocols.SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client, but with change event added
  */
 var createCIIClient = function(webSocket, clientOptions) {
 	

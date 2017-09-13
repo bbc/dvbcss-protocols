@@ -2,7 +2,7 @@ var Correlation = require("dvbcss-clocks").Correlation;
 var WallClockMessage = require("./WallClockMessage");
 
 /**
- * @alias module:sync-protocols/WallClock.Candidate
+ * @memberof sync-protocols.WallClock
  * @description
  * Reperesents a measurement candidate. Is derived from a response {WallClockMessage}
  *

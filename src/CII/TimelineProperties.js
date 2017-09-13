@@ -1,12 +1,16 @@
 
 
 /**
- * @alias module:sync-protocols/CII.TimelineProperties
+ * @memberof sync-protocols.CII
  * @class
  * @description
  * Object representing properties for an available timeline signalled in a CII message.
  *
  * @constructor
+ * @param {String} timelineSelector the timeline selector for this timeline
+ * @param {Number} unitsPerTick the denominator of the tick rate
+ * @param {Number} unitsPerSecond the numerator of the tick rate
+ * @param {Number} [accuracy] Indication of timeline accuracy, or <code>undefined</code>
  */
 var TimelineProperties = function(timelineSelector, unitsPerTick, unitsPerSecond, accuracy) {
 
@@ -22,8 +26,9 @@ var TimelineProperties = function(timelineSelector, unitsPerTick, unitsPerSecond
 }
 
 /**
- * Method intended to be called from PresentationTimestamps.deserialise
- * @returns {PresentationTimestamp} translates an object into a PresentationTimestamp.
+ * Create a {TimelineProperties} object from a plain Javascript object with the same properties.
+ * @param {Object} o An object with the same properties as a TimelineProperties object.
+ * @returns {TimelineProperties} with the same properties as the object passed as the argument
  */
 TimelineProperties.getFromObj = function (o) {
 
@@ -35,16 +40,20 @@ TimelineProperties.getFromObj = function (o) {
 }
 
 
+/**
+ * Serialise to JSON
+ * @returns {String} JSON representation of these timeline properties
+ */
 TimelineProperties.prototype.serialise = function()
 {
 	  return JSON.stringify(this);
 }
 
-// TimelineProperties.prototype.toJSON = function()
-// {
-// 	  return JSON.stringify(this);
-// }
-
+/**
+ * Parse a JSON representation of timeline properties.
+ * @param {String} jsonVal The timeline properties encoded as JSON.
+ * @returns {TimelineProperties} with the same properties as the JSON§ passed as the argument
+ */
 TimelineProperties.deserialise = function (jsonVal) {
     // coerce from arraybuffer,if needed
     if (jsonVal instanceof ArrayBuffer) {

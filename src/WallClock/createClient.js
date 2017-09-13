@@ -1,5 +1,5 @@
 /**
- * @alias module:sync-protocols/WallClock.createClient
+ * @memberof sync-protocols.WallClock
  * @description
  * Factory function that creates a Wall Clock client.
  *

@@ -6,17 +6,26 @@ var WeakMap   = (typeof window !== "undefined" && window.WeakMap) || require('we
 var PRIVATE   = new WeakMap();
 
 
+/**
+ * CII Client callback
+ * @callback ciiChangedCallback
+ * @param {sync-protocols.CII.CIIMessage} cii The current CII state
+ * @param {Number} changemask A [bitfield mask]{@link sync-protocols.CII.CIIMessage.CIIChangeMask} describing which CII properties have just changed
+ */
 
 
 /**
- * @alias module:sync-protocols/CII.CIIClientProtocol
+ * @memberof sync-protocols.CII
  * @class
  * @description Implementation of the client part of the CII protocol as defined in DVB CSS.
    With start() the protocol is initiated.
  *
  * @implements ProtocolHandler
+ * @fires sync-protocols.CII.CIIClientProtocol#change
  *
  * @constructor
+ * @param {Object} [clientOptions] Optional. Parameters for this protocol client.
+ * @param {ciiChangedCallback} [clientOptions.callback] Optional. Specify a callback function that will be passed the 
  */
 
 function CIIClientProtocol (clientOptions) {
@@ -31,6 +40,19 @@ function CIIClientProtocol (clientOptions) {
       priv.CIIChangeCallback = clientOptions.callback
   }
 
+  /**
+   * The current CII state, as shared by the server (the TV).
+   * This is not the most recently received message (since that may only
+   * describe changes since the previous message). Instead this is the result
+   * of applying those changes to update the client side model of the server
+   * side CII state.
+   * @property {CIIMessage}
+   * @name sync-protocols.CII.CIIClientProtocol#cii
+   */
+  Object.defineProperty(this, 'cii', {
+      enumerable: true,
+      get: function() { return priv.cii }
+  })
 }
 
 inherits(CIIClientProtocol, events.EventEmitter);
@@ -82,6 +104,15 @@ CIIClientProtocol.prototype.handleMessage = function (msg) {
         if (priv.CIIChangeCallback !== undefined) {
         	priv.CIIChangeCallback(priv.cii, changemask);
         }
+        /**
+         * @memberof sync-protocols.CII.CIIClientProtocol
+         * @event change
+         * @description
+         * The CII state of the server has changed.
+         * @param {sync-protocols.CII.CIIMessage} cii The current CII state of the server
+         * @param {Object} changedNames 
+         * @param {number} changeMask A [bitfield mask]{@link sync-protocols.CII.CIIMessage.CIIChangeMask} describing which CII properties have just changed
+         */
         this.emit("change", priv.cii, changeNames, changemask);
     }
 
@@ -99,3 +130,4 @@ CIIClientProtocol.prototype.isStarted = function() {
 };
 
 module.exports = CIIClientProtocol;
+

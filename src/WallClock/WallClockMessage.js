@@ -1,12 +1,12 @@
 /**
- * @alias module:sync-protocols/WallClock.WallClockMessage
+ * @memberof sync-protocols.WallClock
  * @class
  * @description
  * Object for representing a wall clock message. User a {@link ProtocolSerialiser} to convert to/from the format in which the message is carried on the wire.
  *
  * @constructor
  * @param {Number} version Should be 0.
- * @param {WallClockMessage.TYPES} type.
+ * @param {sync-protocols.WallClock.WallClockMessage.TYPES} type.
  * @param {Number} precision Clock precision (in seconds and fractions of a second).
  * @param {Number} max_freq_error Clock maximum frequency error (in ppm).
  * @param {Number} originate_timevalue_secs Request sent time (seconds part)
