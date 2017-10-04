@@ -1,61 +1,49 @@
-# Pure JS sync protocols library
+# JS sync protocols library for companion synchronisation
 
-An implementation of synchronisation protocols in JS intended for use in the
-browser (WebSocket based clients only) and node.js (UDP and WebSocket clients+servers)
+sync-protocols is a javascript library implementing client and server protocols
+for synchronisation between TVs and companion screen applications using the protocols
+specified by [DVB CSS](http://www.etsi.org/standards-search?search=103+286&page=1&title=1&keywords=1&ed=1&sortby=1)
+or [HbbTV 2](http://hbbtv.org/resource-library/). 
+ 
+The library is written in ES5 and works in the browser where it can provide WebSocket based clients only. To use it in applications that will run it the browser, it must be pre-processed using [webpack](https://webpack.js.org/) or [browserify](http://browserify.org/). It also works in
+node.js where it provides both UDP and WebSocket clients+servers.
+
+|**Feature**             |**Supported in node**|**Supported in browser**<br/>(webpack/browserify) |
+|------------------------|:------:|:-----------------------------------:|
+|CII client (WebSockets) |  YES   | YES                                 |
+|TS client (WebSockets)  |  YES   | YES                                 |
+|TS client (UDP)         |  YES   |                                     |
+|WC client (UDP)         |  YES   |                                     |
+|WC client (WebSockets)  |  YES   | YES                                 |
+|WC server (UDP)         |  YES   |                                     |
+|WC server (WebSockets)  |  YES   | &nbsp;                              |
+
+This library has similarities to the protocol components in [pydvbcss](https://github.com/bbc/pydvbcss)
+and uses some similar patterns.
+
+<img src="https://2immerse.eu/wp-content/uploads/2016/04/2-IMM_150x50.png" align="left"/><em>This project was originally developed as part of the <a href="https://2immerse.eu/">2-IMMERSE</a> project, co-funded by the European Commission’s <a hef="http://ec.europa.eu/programmes/horizon2020/">Horizon 2020</a> Research Programme</em>
 
 ## Getting started
 
-### 1. Download and install dependencies
+### Use in your own project
 
-First download and then install dependencies:
+
+Install via npm:
+
+    $ npm install --save sync-protocols
+    
+Or download or clone this repository and build:
 
     $ cd sync-protocols
     $ npm install
-
-Note that NPM install might fail if NPM is not able to access your credentials for the
-project repository.
-
-(NPM 'link' is no longer required for project private packages. This is
-because the dependency entry in package.json now points directly to the
-repository URL)
-
-
-### 2. EITHER: Build for the browser
-
-If you wish to build it into a single JS file suitable for the browser (i.e.
-for including in a webpage) then do this:
-
-    $ grunt
-
-Resulting library is placed in `dist/browser/sync-protocols.js`.
-
-### OR: use in another nodejs project
-
-Alternatively, use this as a dependency in the package.json of your own
-project. First make it available to your local npm installation.
-
-    $ npm link
-
-Make sure it is included as a dependency in package.json:
-
-    ...
-    "dependencies": {
-        ...
-        "sync-protocols": "^0.0.1",
-        ...
-    }
-
-Ask npm to link it:
-
-    $ npm link sync-protocols
-
+    
 
 
 ## Documentation
 
 JSDoc documentation can be built:
 
-    $ grunt jsdoc
+    $ grunt doc
 
 Documentation is generated and output as HTML into the `doc` subfolder.
 
@@ -76,7 +64,8 @@ connection:
 
     var clocks = require("dvbcss-clocks");
     var SyncProtocols = require("sync-protocols");
-    var createClient = SyncProtocols.WallClock.createJsonWebSocketClient;
+    var WallClock = SyncProtocols.WallClock;
+    var createClient = WallClock.createJsonWebSocketClient;
 
     var ws = new WebSocket("ws://127.0.0.1:7681/wall-clock-server");
 
@@ -89,106 +78,62 @@ Then at some point later, just close the WebSocket connection to stop the client
 
     ws.close();
 
-There are also functions to create other variants:
+There are also functions to create other variants using different serialisations
+or network connection types; and also for other protocols (CII protocol, TS protocol)...
 
-* `SyncProtocols.WallClock.createJsonWebSocketClient` - JSON protocol via WebSocket
-* `SyncProtocols.WallClock.createBinaryWebSocketClient` - binary protocol via WebSocket
-* `SyncProtocols.WallClock.createBinaryUdpClient` - binary protocol via UDP (nodejs only)
+## Factory functions provided
 
-
-## Library architecture
-
-The library is designed to be modular and allow protocols (clients/servers)
-to be separated from on-the-wire message formats (Json/Binary etc)
-and the type of network transport (UDP/Websockets etc).
-
-Protocol Handlers implement the protocol:
-
-* `sync-protocols.WallClock.WallClockClientProtocol` - implements a WallClock protocol client
-
-These have a handler function that is called when a message is received, and they
-emit a `send` event to request a message be sent.
-
-Internally they use objects represent protocol messages in the abstract:
-
-* `SyncProtocols.WallClock.WallClockMessage` - object representing a Wall Clock protocol message
-
-But the protocol handler also uses serialisers to *pack* or *unpack* then to/from on-the-wire formats:
-
-* `SyncProtocols.WallClock.BinarySerialiser` - packs/unpacks to the binary format used in [DVB CSS](http://www.etsi.org/deliver/etsi_ts/103200_103299/10328602/01.01.01_60/ts_10328602v010101p.pdf)
-* `SyncProtocols.WallClock.JsonSerialiser` - packs/unpacks to a JSON format
-
-Adaptors provide the glue between the underlying network connection (represented usually by
-some kind of 'socket' object) and the Protocol Handler. They notify the handler of
-received messages and they listen for the 'send' events.
-
-* `SyncProtocols.SocketAdapators.UdpAdaptor` - for node.js UDP [dgram](https://nodejs.org/api/dgram.html) object
-* `SyncProtocols.SocketAdaptors.WebSocketAdaptor` - for any [W3C WebSocket API](https://www.w3.org/TR/websockets/) compliant object
+    var SyncProtocols = require("sync-protocols");
+    
+    var CII = SyncProtocols.CII;
+    var TimelineSynchronisation = SyncProtocols.TimelineSynchronisation;
+    var WallClock = SyncProtocols.WallClock;
 
 
+**CII protocol** (clients only)
+
+* `CII.`**`createCIIClient`** (JSON, WebSockets)
 
 
-## Protocol implementation details
+**Timeline Synchronisation protocol** (clients only)
 
-### Wall Clock sync protocol
-
-The protocol is intended to be a request-response protocol that functions
-identically to that defined in clause 8 of the DVB CSS specification as the
-"Wall Clock protocol".
-
-As a quick reminder: the protocol is a request-response exchange that is
-initiated by the party wishing to sync its clock (client)  to the other party
-(server).
-
-Message types are as follows:
-
-| Value | Meaning                            |
-| :---: | :--------------------------------- |
-| 0     | Request                            |
-| 1     | Response with no follow-up planned |
-| 2     | Response with follow-up planned    |
-| 3     | Follow-up                          |
+* `TimelineSynchronisation.`**`createTSClient`** (JSON, WebSockets)
 
 
-#### Binary format
+**Wall Clock protocol** (clients and servers)
 
-This is implemented in `sync-protocols.WallClock.BinarySerialiser`.
+* `WallClock.`**`createJsonWebSocketClient`**
+* `WallClock.`**`createBinaryWebSocketClient`**
+* `WallClock.`**`createBinaryUdpClient`**
+* `WallClock.`**`createBinaryWebSocketServer`**
+* `WallClock.`**`createBinaryUdpServer`**
 
-Identical to the DVB CSS format.
+Note that only Binary messages via UDP are truly compliant with the DVB-CSS
+specification. The other variants have been created for convenience for use
+in other applications that do not communicate directly with a TV implementing
+DVB-CSS.
 
-#### JSON serialisation format
+## Super-quick introduction to the protocols
 
-This is implemented in `sync-protocols.WallClock.JsonSerialiser`.
+DVB has defined 3 protocols for communicating between a companion and TV in
+order to create synchronised second screen / dual screen / companion experiences
+(choose whatever term you prefer!) that are implemented here:
 
-The protocol message format carries the same fields as the DVB CSS wall clock
-protocol, however instead of encoding them in a binary structure, they are
-instead carried in a JSON object. The properties of the object are as follows:
+ * CSS-CII - A WebSockets+JSON protocol that conveys state from the TV, such as
+   the ID of the content being shown at the time. It also carries the URLs to
+   connect to the other two protocols.
 
-Example: (with explanatory comments that must be removed for it to be valid JSON)
+ * CSS-WC - A simple UDP protocol (like NTP but simplified) that establishes a
+   common shared clock (a "wall clock") between the TV and companion, compensating
+   for network delays.
 
-    {
-        "v":    0,              /* version = 0 */
-        "t":    2,              /* type = response with follow-up planned */
-        "p":    0.0001,         /* server clock has 0.1 millisecond precision */
-        "mfe":  50,             /* server clock max freq error = 50 ppm */
-        "otvs": 19346582,       /* client request sent at 19346582.9826511 seconds */
-        "otvn": 982651100,      
-        "rt":   29784724.1927,  /* server received request at 29784724.1927 seconds */
-        "tt":   29784724.1938   /* server sent response at 29784724.1938 seconds */
-    }
+ * CSS-TS - Another WebSockets+JSON protocol that communicates timestamps from
+   TV to Companion that describe the current timeline position.
 
-##### Property names and meanings
+The TV implements servers for all 3 protocols. The Companion implements clients.
 
-| Property name | Value type | Value meaning                  | Units/default value |
-| :------------ | :--------: | :----------------------------- | :-----------------: |
-| v             | Number     | Message version                | 0                   |
-| t             | Number     | Message type (see below)       | (see below)         |
-| p             | Number     | Server clock precision         | seconds+fractions   |
-| mfe           | Number     | Server clock max freq error    | ppm                 |
-| otvs          | Number     | Request sent timevalue (secs)  | whole seconds       |
-| otvn          | Number     | Request sent timevalue (nanos) | nanoseconds part    |
-| rt            | Number     | Request received timevalue     | seconds+fractions   |
-| tt            | Number     | Response sent timevalue        | seconds+fractions   |
+There are other protocols defined in the specification (CSS-TE and CSS-MRS) that
+are not currently implemented by this library.
 
 
 ## Authors

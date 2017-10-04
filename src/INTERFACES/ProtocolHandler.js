@@ -3,7 +3,7 @@
  * @description
  * Interface for code that implements the logic of a protocol.
  *
- * <p>A protocol handler emits a [send]{@link ProtocolHandler#send} event to send messages, and is passed recieved
+ * <p>A protocol handler emits a [send]{@link ProtocolHandler#event:send} event to send messages, and is passed recieved
  * messages by having its [handleMessage()]{@link ProtocolHandler#handleMessage}
  * method called.
  *
@@ -15,12 +15,13 @@ var ProtocolHandler = function() {}
  * Starts the protocol handler running
  * @abstract
  */
-ProtocolHandler.prototype.start = function() { throw "Not implemented"; },
+ProtocolHandler.prototype.start = function() { throw "Not implemented"; }
+
 /**
  * Stops the protocol handler
  * @abstract
  */
-ProtocolHandler.prototype.stop = function() { throw "Not implemented"; },
+ProtocolHandler.prototype.stop = function() { throw "Not implemented"; }
 
 /**
  * Handle a received message
@@ -28,7 +29,7 @@ ProtocolHandler.prototype.stop = function() { throw "Not implemented"; },
  * @param {*} source Opaque data to be passed back when sending the response, to ensure it is routed back to the sender
  * @abstract
  */
-ProtocolHandler.prototype.handleMessage = function(msg, source) { throw "Not implemented"; },
+ProtocolHandler.prototype.handleMessage = function(msg, source) { throw "Not implemented"; }
 
 /**
  * @event ProtocolHandler#send

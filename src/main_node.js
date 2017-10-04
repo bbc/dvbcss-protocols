@@ -13,7 +13,7 @@
 
  * <p>This is the top level module that you should "require":
  * @example
- * <caption>Importing this module and accessing the namespaces within it</caption
+ * <caption>Importing this module and accessing the namespaces within it</caption>
  * var SyncProtocols = require("sync-protocols")
  * var CII = SyncProtocols.CII
  * var CII = SyncProtocols.TimelineSynchronisation

@@ -2,7 +2,7 @@
  * @memberof sync-protocols
  * @namespace WallClock
  * @description
- * Classes, methods and objects implementing the Wall clock synchronisation protocol.
+ * Classes, methods and objects implementing the [Wall clock synchronisation protocol]{@tutorial protocol-wc}.
  *
  * <p>The simplest way to use them is to create the network connection, and {CorrelatedClock}
  * to represent the Wall Clock, then pass both to the appropriate factory function:

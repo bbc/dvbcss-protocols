@@ -8,6 +8,7 @@
  * limitations under the License.
  ****************************************************************************/
 
+PACKAGE=require("./package.json")
 
 module.exports = function(grunt) {
 
@@ -21,6 +22,7 @@ module.exports = function(grunt) {
     
     copy: {
       src: { expand: true, cwd: 'src/', src: ['**'], dest: 'build/lib/' },
+      doc_static: { expand: true, cwd: 'tutorials', src: ['*.png'], dest: 'doc/'+PACKAGE.name+'/'+PACKAGE.version}
     },
       
     webpack: {
@@ -112,11 +114,12 @@ module.exports = function(grunt) {
       },
     },
     
-    jsdoc : {
+    __jsdoc__ : {
         dist : {
-            src: ['README.md', 'package.json', 'src/**/*.js', 'test/**/*.js'],
+            src: ['README.md', 'package.json', 'src/**/*.js', 'test/**/*.js', 'tutorials/*.png'],
             options: {
-                destination: 'doc'
+                destination: 'doc',
+                tutorials: 'tutorials'
             }
         }
     }
@@ -130,10 +133,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.renameTask('jsdoc','__jsdoc__')
 
   // default do nothing
   grunt.registerTask('default', ['build', 'watch']);
   
+  grunt.registerTask('jsdoc', ['__jsdoc__', 'copy:doc_static']);
   grunt.registerTask('test', ['build', 'clean:tests', 'webpack:specs', 'jasmine:tests']);
   grunt.registerTask('test-watch', ['test', 'watch:tests']);
   grunt.registerTask('build', ['clean:dist', 'clean:build', 'copy:src', 'webpack:lib_browser', 'webpack:lib_node']);

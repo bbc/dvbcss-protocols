@@ -2,14 +2,14 @@
  * @memberof sync-protocols
  * @namespace CII
  * @description
- * This namespace contains classes, methods and objects implementing the CII protocol.
+ * This namespace contains classes, methods and objects implementing the [CII protocol]{@tutorial cii-protocol}.
  *
  * <p>The simplest way to use them is to create the WebSocket connection to the CII server
  * and then pass it to the appropriate factory function:
  * <ul>
  *   <li> [createCIIClient(...)]{@link sync-protocols.CII.createCIIClient}
  * </ul>
- * <p>Then, add an event listener to be notified of changes to CII state.
+ * <p>...then add an event listener to be notified of changes to CII state.
  * This is the recommended method.
  *
  * <p>You can alternatively pass in a [callback]{@link ciiChangedCallback} via the options property

@@ -2,14 +2,14 @@
  * @memberof sync-protocols
  * @namespace TimelineSynchronisation
  * @description
- * Classes, methods and objects implementing the Timeline synchronisation protocol.
+ * Classes, methods and objects implementing the [Timeline synchronisation protocol]{@tutorial protocol-ts}.
  *
  * <p>The simplest way to use them is to create the network connection, and {CorrelatedClock}
  * to represent the Synchronisation Timeline then pass both to the appropriate factory function:
  * <ul>
  *   <li> [createTSClient(...)]{@link sync-protocols.TimelineSynchronisation.createTSClient}
  * </ul>
- * The clock must have its parent already set to a clock object representing the Wall Clock.
+ * The clock must have its parent already set to a clock object representing the [Wall Clock]{@tutorial protocol-wc}.
  *
  * The clock will be kept up-to-date as messages are received. This includes setting inherits
  * availability flag to reflect whether the timeline is signalled by the server as available.
