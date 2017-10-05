@@ -2,6 +2,7 @@
   "name": "sync-protocols",
   "version": "0.0.1",
   "description": "Javascript library implementing client and server code for DVB CSS sync protocols",
+  "browser": "src/main_browser.js",
   "main": "src/main_node.js",
   "directories": {
     "example": "examples"

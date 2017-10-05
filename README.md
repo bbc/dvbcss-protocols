@@ -37,7 +37,16 @@ Or download or clone this repository and build:
     $ cd sync-protocols
     $ npm install
     
+### Browser or node?
 
+If you build your browser application using [webpack](https://webpack.js.org/) or [browserify](http://browserify.org/) then a different entry point will be used
+that excludes the features not supported within in the browser.
+
+If you use a different build process then you may need to select the entry
+point manually:
+
+ * `main_node.js` is for node.js and is listed as "main" in `package.json`.
+ * `main_browser.js` is for browsers and is listed as "browser" in `package.json`.
 
 ## Documentation
 
