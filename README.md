@@ -48,6 +48,11 @@ point manually:
  * `main_node.js` is for node.js and is listed as "main" in `package.json`.
  * `main_browser.js` is for browsers and is listed as "browser" in `package.json`.
 
+### Run the examples
+
+There are simple examples of clients and servers in the `/examples` sub-directory.
+Use the `--help` option to determine the command line options for each example.
+
 ## Documentation
 
 JSDoc documentation can be built:
