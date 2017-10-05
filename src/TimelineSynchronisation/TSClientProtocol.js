@@ -50,7 +50,7 @@ var PRIVATE = new WeakMap();
  * @param {string} options.contentIdStem The Content Identifier stem is considered to match the timed content currently being presented by the TV Device
  * @param {string} options.timelineSelector The Timeline Selector describes the type and location of timeline signalling to be derived from the Timed Content
 currently being presented by the TV Device
- * @param {Number} options.tickrate The tickrate of the timeline that is specified by the timelineSelector.
+ * @param {Number} [options.tickrate] The tickrate of the timeline that is specified by the timelineSelector. If specified, then will be used to set the tickrate of teh provided clock.
  * @param {*} [options.dest] The destination that the client should use when sending not in response to a received message. The value used here will depend on the {SocketAdaptor} being used.
  */
 
@@ -58,8 +58,7 @@ function TSClientProtocol (syncTLClock, options) {
   if (!(
       typeof syncTLClock.setCorrelation == "function" &&
       typeof options.contentIdStem == "string" &&
-      typeof options.timelineSelector == "string" &&
-      !isNaN(options.tickrate)
+      typeof options.timelineSelector == "string"
   ))
   {
     throw "TSClientProtocol(): Invalid parameters";
@@ -77,7 +76,10 @@ function TSClientProtocol (syncTLClock, options) {
   // the timeline selector identifying the synchronisation timeline
   priv.timelineSelector = options.timelineSelector;
   // the tickrate of the timeline in ticks per seconds
-  priv.tickrate = options.tickrate;
+  var tr = Number(options.tickRate);
+  if (!isNaN(tr) && tr > 0) {
+      syncTLClock.tickRate = tr;
+  }
 
   priv.dest = (options.dest)?options.dest:null;
 
