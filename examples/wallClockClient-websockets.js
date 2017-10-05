@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /****************************************************************************
  * Copyright 2017 British Broadcasting Corporation
  * 
@@ -15,24 +16,49 @@
 *****************************************************************************/
 
 var WebSocket = require('ws');
-var SyncProtocols = require("sync-protocols");
+var SyncProtocols = require("..");
 var clocks = require("dvbcss-clocks");
 var createClient = SyncProtocols.WallClock.createBinaryWebSocketClient;
-var sysClock = new clocks.DateNowClock();
-var wallClock = new clocks.CorrelatedClock(sysClock);
 
-var ws = new WebSocket('ws://localhost:6676/wc');
-var protocolOptions = {
-    dest: { address:"ws://localhost:6676/wc", port:6676 },
-};
+var program = require("commander");
+var URL = 'ws://127.0.0.1:6677/';
+
+program
+	.version('0.0.1')
+	.description(`WebSocket Wall clock client that connects to the specified URL (default ${URL}).`)
+	.arguments('[<url>]')
+	.action(function (url) {
+		if (url !== undefined) {
+			URL = String(url)
+		}
+	})
+
+program.parse(process.argv)
+
+var sysClock = new clocks.DateNowClock();
+var wallClock = new clocks.CorrelatedClock(sysClock, {tickRate:1000000000});
+
+var ws = new WebSocket(URL);
+var protocolOptions = {};
 
 
 ws.on('open', function() {
+    console.log("Connection open")
     var wcClient = createClient(ws, wallClock, protocolOptions);
 
     setInterval(function() {
-        console.log("WallClock = ",wallClock.now());
-        console.log("dispersion = ",wallClock.dispersionAtTime(wallClock.now()));
+        console.log("WallClock (nanos) = ",wallClock.now());
+        console.log("dispersion (secs) = ",wallClock.dispersionAtTime(wallClock.now()));
+        console.log("")
     },1000);
 
 });
+
+ws.on('error', function() {
+    console.log("Connection error")
+    process.exit(1)
+})
+ws.on('close', function() {
+    console.log("Connection closed")
+    process.exit(1)
+})

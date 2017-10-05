@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /****************************************************************************
  * Copyright 2017 British Broadcasting Corporation
  * 
@@ -15,24 +16,47 @@
 *****************************************************************************/
 
 var dgram = require("dgram");
-var SyncProtocols = require("sync-protocols");
+var SyncProtocols = require("..");
 var clocks = require("dvbcss-clocks");
 var createClient = SyncProtocols.WallClock.createBinaryUdpClient;
+
+var program = require("commander");
+var HOST = '127.0.0.1';
+var PORT = 6677
+
+program
+	.version('0.0.1')
+	.description(`UDP Wall clock client that connects to a server at the specified address (default ${HOST}) and port (default ${PORT}).`)
+	.arguments('[<host>] [<port>]')
+	.action(function (host, port) {
+		if (host !== undefined) {
+			HOST = String(host)
+		}
+		if (port !== undefined) {
+			PORT = Number(port)
+		}
+	})
+
+program.parse(process.argv)
+
 var sysClock = new clocks.DateNowClock();
-var wallClock = new clocks.CorrelatedClock(sysClock);
+var wallClock = new clocks.CorrelatedClock(sysClock, {tickRate:1000000000});
 
 var udpSocket = dgram.createSocket({type:'udp4', reuseAddr:true});
 
-var protocolOptions = {
-    dest: { address:"192.168.0.10", port:6677 }
-};
-
 udpSocket.on('listening', function() {
+    console.log(`Starting Wall Clock client, communicating with udp://${HOST}:${PORT}`)
+
+    var protocolOptions = {
+        dest: { address:HOST, port:PORT }
+    };
+
     var wcClient = createClient(udpSocket, wallClock, protocolOptions);
 
     setInterval(function() {
-        console.log("WallClock = ",wallClock.now());
-        console.log("dispersion = ",wallClock.dispersionAtTime(wallClock.now()));
+        console.log("WallClock (nanos) = ",wallClock.now());
+        console.log("dispersion (secs) = ",wallClock.dispersionAtTime(wallClock.now()));
+        console.log("")
     },1000);
 
 });

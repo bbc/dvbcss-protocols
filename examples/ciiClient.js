@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /****************************************************************************
  * Copyright 2017 British Broadcasting Corporation
  * 
@@ -15,9 +16,28 @@
 *****************************************************************************/
 
 var WebSocket = require('ws');
-var SyncProtocols = require("sync-protocols");
+var SyncProtocols = require("..");
 var createClient = SyncProtocols.CII.createCIIClient;
 var CIIMessage = SyncProtocols.CII.CIIMessage;
+
+
+var program = require("commander");
+var CII_URL;
+
+program
+	.version('0.0.1')
+	.description('Client that connects to a CII server at the specified URL.')
+	.arguments('<ciiUrl>')
+	.action(function (ciiUrl) {
+		CII_URL = ciiUrl
+	})
+
+program.parse(process.argv)
+
+if ( ! /^wss?:\/\//.exec(CII_URL) ) {
+	console.error("Expected URL for CII server endpoint (beginning with ws:// or wss:// )")
+	process.exit(1)
+}
 
 
 var onCiiChange = function(cii_obj, changes, changemask)
@@ -37,7 +57,8 @@ var onCiiChange = function(cii_obj, changes, changemask)
 var clientOptions = {};
 
 // now create the actual CII protocol client
-var ws = new WebSocket('ws://127.0.0.1:7681/cii');
+console.log("Trying to connect to "+CII_URL)
+var ws = new WebSocket(CII_URL);
 
 ws.on('open', function() {
     var ciiClient = createClient(ws, clientOptions);
@@ -45,3 +66,11 @@ ws.on('open', function() {
     
     console.log("CII client connected");
 });
+
+ws.on('error', function() {
+	console.log("Error with CII connection")
+})
+
+ws.on('close', function() {
+	console.log("Connection closed.")
+})

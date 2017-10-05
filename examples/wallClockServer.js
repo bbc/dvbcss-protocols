@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /****************************************************************************
  * Copyright 2017 British Broadcasting Corporation
  * 
@@ -14,10 +15,30 @@
  * limitations under the License.
 *****************************************************************************/
 
-var WebSocketServer = require("ws").Server;
-var SyncProtocols = require("sync-protocols");
+var dgram = require("dgram");
+var SyncProtocols = require("..");
 var clocks = require("dvbcss-clocks");
-var createServer = SyncProtocols.WallClock.createBinaryWebSocketServer;
+var createServer = SyncProtocols.WallClock.createBinaryUdpServer; 
+
+var program = require("commander");
+var BIND_HOST = '0.0.0.0';
+var BIND_PORT = 6677
+
+program
+	.version('0.0.1')
+	.description(`UDP Wall clock server bound to the specified interface (default ${BIND_HOST}) and port (default ${BIND_PORT}).`)
+	.arguments('[<bindHost>] [<bindPort>]')
+	.action(function (bindHost, bindPort) {
+		if (bindHost !== undefined) {
+			BIND_HOST = String(bindHost)
+		}
+		if (bindPort !== undefined) {
+			BIND_PORT = Number(bindPort)
+		}
+	})
+
+program.parse(process.argv)
+
 var sysClock = new clocks.DateNowClock();
 var wallClock = new clocks.CorrelatedClock(sysClock);
 
@@ -28,13 +49,18 @@ var protocolOptions = {
 	maxFreqError: sysClock.getRootMaxFreqError(),
 	followup: true
 };
-console.log("WallClock server (binary + websockets) ...");
 
-var wss = new WebSocketServer({ host: "0.0.0.0", port: 6676 });
+var udpSocket = dgram.createSocket({type:'udp4', reuseAddr:true});
 
-wss.on('connection', function connection(ws) {
+udpSocket.on('listening', function() {
+    var wcServer = createServer(udpSocket, wallClock, protocolOptions);
 
-	var wcServer = createServer(ws, wallClock, protocolOptions);
-	console.log("Handler created for new connection");
+    var address = udpSocket.address();
+    console.log(`Wallclock server listening on udp://${address.address}:${address.port}`);
+    
+    console.log("Server started? ",wcServer.isStarted());
 
 });
+console.log(`Binding to ${BIND_HOST} port ${BIND_PORT}`)
+udpSocket.bind(BIND_PORT, BIND_HOST);
+
