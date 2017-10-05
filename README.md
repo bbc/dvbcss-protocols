@@ -136,7 +136,18 @@ There are other protocols defined in the specification (CSS-TE and CSS-MRS) that
 are not currently implemented by this library.
 
 
-## Authors
+## Licence and Authors
 
- * Matt Hammond (BBC)
- * Rajiv Ramdhany (BBC)
+All code and documentation is licensed by the original author and contributors under the Apache License v2.0:
+
+* [British Broadcasting Corporation](http://www.bbc.co.uk/rd) (original author)
+* [Institut für Rundfunktechnik](http://www.irt.de/)
+* [British Telecommunications (BT) PLC](http://www.bt.com/)
+
+See AUTHORS file for a full list of individuals and organisations that have
+contributed to this code.
+.
+
+## Contributing
+
+If you wish to contribute to this project, please get in touch with the authors.
