@@ -1,0 +1,12 @@
+files:
+  - README.md
+dir: src
+packageJson: package.json
+articles:
+  - Overview: README.md
+  - "CSS-CII protocol": tutorials/cii-protocol.md
+  - "CSS-TS protocol": tutorials/ts-protocol.md
+  - "CSS-WC protocol": tutorials/wc-protocol.md
+  - "Architecture of this library": tutorials/architecture.md
+  - Authors: AUTHORS
+  - Licence: LICENSE.md
