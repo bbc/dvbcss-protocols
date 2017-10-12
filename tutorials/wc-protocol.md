@@ -45,7 +45,7 @@ between the time of its clock and that of the server. It can also calculate an
 error bound on this (known as dispersion):
 
 <div style="text-align:center;">
-    <img src="wc-request-response.png" style="width:40%; min-width: 8em; max-width: 15em;">
+    <img src="https://bbc.github.io/dvbcss-protocols/wc-request-response.png" style="width:40%; min-width: 8em; max-width: 15em;">
 </div>
 
 Relationship expressed as an estimated offset:

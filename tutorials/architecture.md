@@ -10,7 +10,7 @@ Synchronisation protocol. It has not been done for the CII protocol.
 
 
 <div style="text-align:center;">
-    <img src="protocol-handler-architecture.png" style="width:80%; min-width: 25em; max-width: 45em;">
+    <img src="https://bbc.github.io/dvbcss-protocols/protocol-handler-architecture.png" style="width:80%; min-width: 25em; max-width: 45em;">
 </div>
 
 A [Protocol Handler]{@link ProtocolHandler} implements the protocol interaction. They receive and send messages via a [Socket Adaptor]{@link SocketAdaptor} that abstracts the underlying network connection.
