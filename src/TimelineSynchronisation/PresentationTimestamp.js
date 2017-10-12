@@ -20,7 +20,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols.TimelineSynchronisation
+ * @memberof dvbcss-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing a presentation timestamp to correlate media timelines with wall clock times.

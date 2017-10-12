@@ -15,7 +15,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols
+ * @memberof dvbcss-protocols
  * @namespace CII
  * @description
  * This namespace contains classes, methods and objects implementing the [CII protocol]{@tutorial cii-protocol}.
@@ -23,7 +23,7 @@
  * <p>The simplest way to use them is to create the WebSocket connection to the CII server
  * and then pass it to the appropriate factory function:
  * <ul>
- *   <li> [createCIIClient(...)]{@link sync-protocols.CII.createCIIClient}
+ *   <li> [createCIIClient(...)]{@link dvbcss-protocols.CII.createCIIClient}
  * </ul>
  * <p>...then add an event listener to be notified of changes to CII state.
  * This is the recommended method.
@@ -34,8 +34,8 @@
  * @example
  * <caption>Using a CII client to synchronise to CII state on a server, and register an event listener to receive updates:</caption>
  * var WebSocket = require('ws');
- * var SyncProtocols = require("sync-protocols");
- * var createClient = SyncProtocols.CII.createCIIClient;
+ * var Protocols = require("dvbcss-protocols");
+ * var createClient = Protocols.CII.createCIIClient;
  * 
  * var ws = new WebSocket("ws://127.0.0.1:7681/cii");
  * 
@@ -64,8 +64,8 @@
  * @example
  * <caption>Using a CII client to synchronise to CII state on a server, and use a callback to receive updates:</caption>
  * var WebSocket = require('ws');
- * var SyncProtocols = require("sync-protocols");
- * var createClient = SyncProtocols.CII.createCIIClient;
+ * var Protocols = require("dvbcss-protocols");
+ * var createClient = Protocols.CII.createCIIClient;
  * 
  * var ws = new WebSocket("ws://127.0.0.1:7681/cii");
  * 

@@ -15,7 +15,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols.WallClock
+ * @memberof dvbcss-protocols.WallClock
  * @description
  * Factory function that creates a Wall Clock server.
  *

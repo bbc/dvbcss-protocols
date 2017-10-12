@@ -1,6 +1,6 @@
 # JS sync protocols library for companion synchronisation
 
-sync-protocols is a javascript library implementing client and server protocols
+dvbcss-protocols is a javascript library implementing client and server protocols
 for synchronisation between TVs and companion screen applications using the protocols
 specified by [DVB CSS](http://www.etsi.org/standards-search?search=103+286&page=1&title=1&keywords=1&ed=1&sortby=1)
 or [HbbTV 2](http://hbbtv.org/resource-library/). 
@@ -30,11 +30,11 @@ and uses some similar patterns.
 
 Install via npm:
 
-    $ npm install --save sync-protocols
+    $ npm install --save dvbcss-protocols
     
 Or download or clone this repository and build:
 
-    $ cd sync-protocols
+    $ cd dvbcss-protocols
     $ npm install
     
 ### Browser or node?
@@ -77,8 +77,8 @@ connection:
     var WebSocket = require('ws');
 
     var clocks = require("dvbcss-clocks");
-    var SyncProtocols = require("sync-protocols");
-    var WallClock = SyncProtocols.WallClock;
+    var Protocols = require("dvbcss-protocols");
+    var WallClock = Protocols.WallClock;
     var createClient = WallClock.createJsonWebSocketClient;
 
     var ws = new WebSocket("ws://127.0.0.1:7681/wall-clock-server");
@@ -97,11 +97,11 @@ or network connection types; and also for other protocols (CII protocol, TS prot
 
 ## Factory functions provided
 
-    var SyncProtocols = require("sync-protocols");
+    var Protocols = require("dvbcss-protocols");
     
-    var CII = SyncProtocols.CII;
-    var TimelineSynchronisation = SyncProtocols.TimelineSynchronisation;
-    var WallClock = SyncProtocols.WallClock;
+    var CII = Protocols.CII;
+    var TimelineSynchronisation = Protocols.TimelineSynchronisation;
+    var WallClock = Protocols.WallClock;
 
 
 **CII protocol** (clients only)

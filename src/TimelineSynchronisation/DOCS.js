@@ -15,7 +15,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols
+ * @memberof dvbcss-protocols
  * @namespace TimelineSynchronisation
  * @description
  * Classes, methods and objects implementing the [Timeline synchronisation protocol]{@tutorial protocol-ts}.
@@ -23,7 +23,7 @@
  * <p>The simplest way to use them is to create the network connection, and {CorrelatedClock}
  * to represent the Synchronisation Timeline then pass both to the appropriate factory function:
  * <ul>
- *   <li> [createTSClient(...)]{@link sync-protocols.TimelineSynchronisation.createTSClient}
+ *   <li> [createTSClient(...)]{@link dvbcss-protocols.TimelineSynchronisation.createTSClient}
  * </ul>
  * The clock must have its parent already set to a clock object representing the [Wall Clock]{@tutorial protocol-wc}.
  *
@@ -34,8 +34,8 @@
  * <caption>Using a Timeline Syncronisation client to synchornise to a server. Uses Websockets and JSON format messages:</caption>
  * var WebSocket = require('ws');
  * var clocks = require("dvbcss-clocks");
- * var SyncProtocols = require("sync-protocols");
- * var createClient = SyncProtocols.TimelineSynchronisation.createTSClient;
+ * var Protocols = require("dvbcss-protocols");
+ * var createClient = Protocols.TimelineSynchronisation.createTSClient;
  * 
  * var ws = new WebSocket("ws://127.0.0.1:7681/wall-clock-server");
  * 

@@ -30,7 +30,7 @@ var WeakMap = (typeof window !== "undefined" && window.WeakMap) || require('weak
 var PRIVATE = new WeakMap();
 
 /**
- * @memberof sync-protocols.WallClock
+ * @memberof dvbcss-protocols.WallClock
  * @class
  * @description
  *

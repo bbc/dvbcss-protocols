@@ -35,7 +35,7 @@ combinations of socket adaptor, protocol handler and serialisation.
 
 ### Example: Wall Clock Protocol client
 
-[WallClockClientProtocol]{@link sync-protocols.WallClock.WallClockClientProtocol}
+[WallClockClientProtocol]{@link dvbcss-protocols.WallClock.WallClockClientProtocol}
 is an example of a protocol handler for a Wallclock Protocol client.
 
 It has a handler function that is called when a message is received, and it
@@ -44,8 +44,8 @@ emits a [send event]{@link ProtocolHandler#event:send} to request a message be s
 For this protocol, there are two serialisers available for *packing*/*unpacking*
 on-the-wire formats:
 
-* The [BinarySerialiser]{@link sync-protocols.WallClock.BinarySerialiser} packs/unpacks to the binary format used in [DVB CSS](http://www.etsi.org/deliver/etsi_ts/103200_103299/10328602/01.01.01_60/ts_10328602v010101p.pdf)
-* The [JsonSerialiser]{@link sync-protocols.WallClock.JsonSerialiser} packs/unpacks to a JSON format
+* The [BinarySerialiser]{@link dvbcss-protocols.WallClock.BinarySerialiser} packs/unpacks to the binary format used in [DVB CSS](http://www.etsi.org/deliver/etsi_ts/103200_103299/10328602/01.01.01_60/ts_10328602v010101p.pdf)
+* The [JsonSerialiser]{@link dvbcss-protocols.WallClock.JsonSerialiser} packs/unpacks to a JSON format
 
 
 
@@ -53,8 +53,8 @@ Adaptors encapsulate the underlying network connection (represented usually by
 some kind of 'socket' object) and the Protocol Handler. They notify the handler of
 received messages and they listen for the 'send' events.
 
-* `SyncProtocols.SocketAdapators.UdpAdaptor` - for node.js UDP [dgram](https://nodejs.org/api/dgram.html) object
-* `SyncProtocols.SocketAdaptors.WebSocketAdaptor` - for any [W3C WebSocket API](https://www.w3.org/TR/websockets/) compliant object
+* `Protocols.SocketAdapators.UdpAdaptor` - for node.js UDP [dgram](https://nodejs.org/api/dgram.html) object
+* `Protocols.SocketAdaptors.WebSocketAdaptor` - for any [W3C WebSocket API](https://www.w3.org/TR/websockets/) compliant object
 
 
 

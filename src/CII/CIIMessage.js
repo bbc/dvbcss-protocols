@@ -17,7 +17,7 @@
 var TimelineProperties = require("./TimelineProperties");
 
 /**
- * @memberof sync-protocols.CII
+ * @memberof dvbcss-protocols.CII
  * @class
  * @description
  * Object representing a CII message sent from the MSAS to the synchronisation clients.

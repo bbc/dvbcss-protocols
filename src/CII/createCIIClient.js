@@ -37,14 +37,14 @@ inherits(AdaptorWrapper, events.EventEmitter);
 
 
 /**
- * @memberof sync-protocols.CII
+ * @memberof dvbcss-protocols.CII
  * @description
  * Factory function that creates a CII client that uses a WebSocket
  * and sends/receives protocol messages in JSON format.
  *
  * @param {WebSocket} webSocket A W3C WebSockets API compatible websocket connection object
  * @param {Object} clientOptions
- * @returns {sync-protocols.SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client, but with change event added
+ * @returns {dvbcss-protocols.SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client, but with change event added
  */
 var createCIIClient = function(webSocket, clientOptions) {
 	

@@ -19,7 +19,7 @@ var WallClockServerProtocol = require("./WallClockServerProtocol");
 var BinarySerialiser = require("./BinarySerialiser");
 
 /**
- * @memberof sync-protocols.WallClock
+ * @memberof dvbcss-protocols.WallClock
  * @description
  * Factory function that creates a Wall Clock server that uses a WebSocket
  * and sends/receives protocol messages in binary format.
@@ -30,7 +30,7 @@ var BinarySerialiser = require("./BinarySerialiser");
  * @param {Number} protocolOptions.precision Precision of server's WallClock in seconds and fractions of a second
  * @param {String} protocolOptions.maxFreqError max frequency error of server's WallClock in ppm (parts per million)
  * @param {Number} protocolOptions.followup Flag set to true if the WallClock server will followup responses to requests with more accurate values for timestamps
- * @returns {sync-protocols.SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole server
+ * @returns {dvbcss-protocols.SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole server
  */
 var createBinaryWebSocketServer = function(webSocket, wallClock, protocolOptions) {
     return new WebSocketAdaptor(

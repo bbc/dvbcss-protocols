@@ -20,30 +20,30 @@
 *****************************************************************************/
 
 /**
- * @module sync-protocols
+ * @module dvbcss-protocols
  * @description
  * Sync protocols for node.js (clients and servers) and the browser (clients only).
  * It contains the following namespaces:
  *
   * <ul>
-  *   <li> [CII]{@link sync-protocols.CII}
-  *   <li> [TimelineSynchronisation]{@link sync-protocols.TimelineSynchronisation}
-  *   <li> [WallClock]{@link sync-protocols.WallClock}
-  *   <li> [SocketAdaptors]{@link sync-protocols.SocketAdaptors}
+  *   <li> [CII]{@link dvbcss-protocols.CII}
+  *   <li> [TimelineSynchronisation]{@link dvbcss-protocols.TimelineSynchronisation}
+  *   <li> [WallClock]{@link dvbcss-protocols.WallClock}
+  *   <li> [SocketAdaptors]{@link dvbcss-protocols.SocketAdaptors}
   * </ul>
 
  * <p>This is the top level module that you should "require":
  * @example
  * <caption>Importing this module and accessing the namespaces within it</caption>
- * var SyncProtocols = require("sync-protocols")
- * var CII = SyncProtocols.CII
- * var CII = SyncProtocols.TimelineSynchronisation
- * var CII = SyncProtocols.WallClock
+ * var Protocols = require("dvbcss-protocols")
+ * var CII = Protocols.CII
+ * var CII = Protocols.TimelineSynchronisation
+ * var CII = Protocols.WallClock
  */
 module.exports = {
     /**
-     * Namespace containing the Wall Clock protocol implementation. See [WallClock]{@link sync-protocols.WallClock}
-     * @see sync-protocols.WallClock
+     * Namespace containing the Wall Clock protocol implementation. See [WallClock]{@link dvbcss-protocols.WallClock}
+     * @see dvbcss-protocols.WallClock
      */
     WallClock: {
         createClient:                require("./WallClock/createClient"),
@@ -64,8 +64,8 @@ module.exports = {
 
 
     /**
-    * Namespace containing the TimelineSynchronisation protocol implementation. See [TimelineSynchronisation]{@link sync-protocols.TimelineSynchronisation}
-    * @see  sync-protocols.TimelineSynchronisation
+    * Namespace containing the TimelineSynchronisation protocol implementation. See [TimelineSynchronisation]{@link dvbcss-protocols.TimelineSynchronisation}
+    * @see  dvbcss-protocols.TimelineSynchronisation
     */
     TimelineSynchronisation : {
       PresentationTimestamps :       require ("./TimelineSynchronisation/PresentationTimestamps"),
@@ -77,8 +77,8 @@ module.exports = {
     },
 
     /**
-    * Namespace containing the CII protocol implementation. See [CII]{@link sync-protocols.CII}
-    * @see sync-protocols.CII
+    * Namespace containing the CII protocol implementation. See [CII]{@link dvbcss-protocols.CII}
+    * @see dvbcss-protocols.CII
     */
     CII : {
     	CIIMessage :                 require ("./CII/CIIMessage"),
@@ -88,8 +88,8 @@ module.exports = {
     },
 
     /**
-     * Namespace containing adaptors between network socket objects and the protocol implementations. See [WallClock]{@link sync-protocols.SocketAdaptors}
-     * @see sync-protocols.SocketAdaptors
+     * Namespace containing adaptors between network socket objects and the protocol implementations. See [WallClock]{@link dvbcss-protocols.SocketAdaptors}
+     * @see dvbcss-protocols.SocketAdaptors
      */
     SocketAdaptors: {
         WebSocketAdaptor:            require("./SocketAdaptors/WebSocketAdaptor"),

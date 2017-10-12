@@ -25,19 +25,19 @@ var PRIVATE   = new WeakMap();
 /**
  * CII Client callback
  * @callback ciiChangedCallback
- * @param {sync-protocols.CII.CIIMessage} cii The current CII state
- * @param {Number} changemask A [bitfield mask]{@link sync-protocols.CII.CIIMessage.CIIChangeMask} describing which CII properties have just changed
+ * @param {dvbcss-protocols.CII.CIIMessage} cii The current CII state
+ * @param {Number} changemask A [bitfield mask]{@link dvbcss-protocols.CII.CIIMessage.CIIChangeMask} describing which CII properties have just changed
  */
 
 
 /**
- * @memberof sync-protocols.CII
+ * @memberof dvbcss-protocols.CII
  * @class
  * @description Implementation of the client part of the CII protocol as defined in DVB CSS.
    With start() the protocol is initiated.
  *
  * @implements ProtocolHandler
- * @fires sync-protocols.CII.CIIClientProtocol#change
+ * @fires dvbcss-protocols.CII.CIIClientProtocol#change
  *
  * @constructor
  * @param {Object} [clientOptions] Optional. Parameters for this protocol client.
@@ -63,7 +63,7 @@ function CIIClientProtocol (clientOptions) {
    * of applying those changes to update the client side model of the server
    * side CII state.
    * @property {CIIMessage}
-   * @name sync-protocols.CII.CIIClientProtocol#cii
+   * @name dvbcss-protocols.CII.CIIClientProtocol#cii
    */
   Object.defineProperty(this, 'cii', {
       enumerable: true,
@@ -121,13 +121,13 @@ CIIClientProtocol.prototype.handleMessage = function (msg) {
         	priv.CIIChangeCallback(priv.cii, changemask);
         }
         /**
-         * @memberof sync-protocols.CII.CIIClientProtocol
+         * @memberof dvbcss-protocols.CII.CIIClientProtocol
          * @event change
          * @description
          * The CII state of the server has changed.
-         * @param {sync-protocols.CII.CIIMessage} cii The current CII state of the server
+         * @param {dvbcss-protocols.CII.CIIMessage} cii The current CII state of the server
          * @param {Object} changedNames 
-         * @param {number} changeMask A [bitfield mask]{@link sync-protocols.CII.CIIMessage.CIIChangeMask} describing which CII properties have just changed
+         * @param {number} changeMask A [bitfield mask]{@link dvbcss-protocols.CII.CIIMessage.CIIChangeMask} describing which CII properties have just changed
          */
         this.emit("change", priv.cii, changeNames, changemask);
     }

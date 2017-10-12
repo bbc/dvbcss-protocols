@@ -1,11 +1,15 @@
 {
-  "name": "sync-protocols",
+  "name": "dvbcss-protocols",
   "version": "0.0.1",
   "description": "Javascript library implementing client and server code for DVB CSS sync protocols",
   "browser": "src/main_browser.js",
   "main": "src/main_node.js",
   "directories": {
     "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bbc/dvbcss-protocols.git"
   },
   "scripts": {
     "test": "grunt test",
@@ -25,7 +29,7 @@
     "dist",
     "examples/**/*"
   ],
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "devDependencies": {
     "commander": "^2.11.0",
     "express-ws-routes": "^1.1.0",

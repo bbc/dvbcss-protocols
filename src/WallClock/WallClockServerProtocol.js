@@ -26,14 +26,14 @@ require("js-object-clone");
 
 
 /**
- * @memberof sync-protocols.WallClock
+ * @memberof dvbcss-protocols.WallClock
  * @class
  * @description
  *
  * Protocol handler that implements a Wall Clock Server .
  *
  * <p>Emits a {@link event:send} to send messages, and is passed received
- * messages by calling [handleMessage()]{@link sync-protocols.WallClock.WallClockClientProtocol#handleMessage}
+ * messages by calling [handleMessage()]{@link dvbcss-protocols.WallClock.WallClockClientProtocol#handleMessage}
  *
  * <p>Is independent of the underlying type of connection (e.g. WebSocket / UDP)
  * and of the message format used on the wire. You provide a {@link ProtocolSerialiser}

@@ -18,9 +18,9 @@
 var express = require('express');
 var app = require('express-ws-routes')();
 
-var SyncProtocols = require("..");
+var Protocols = require("..");
 var clocks = require("dvbcss-clocks");
-var createServer = SyncProtocols.WallClock.createBinaryWebSocketServer;
+var createServer = Protocols.WallClock.createBinaryWebSocketServer;
 
 var program = require("commander");
 var BIND_HOST = '0.0.0.0';

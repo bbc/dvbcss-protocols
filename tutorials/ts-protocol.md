@@ -1,5 +1,5 @@
 **This is only an introduction to the CSS-TS "Timeline Synchronisation" protocol.**
- * **See the [docs for the TimelineSynchronisation namespace]{@link sync-protocols.TimelineSynchronisation} to understand
+ * **See the [docs for the TimelineSynchronisation namespace]{@link dvbcss-protocols.TimelineSynchronisation} to understand
    how to write client or server code using this library.**
  * **See clause 9 of the [DVB CSS specification](http://www.etsi.org/standards-search?search=103+286&page=1&title=1&keywords=1&ed=1&sortby=1) for full detailed semantics of the protocol.**
  * **See clause 13 of the [HbbTV 2 specification](http://hbbtv.org/resource-library/) to

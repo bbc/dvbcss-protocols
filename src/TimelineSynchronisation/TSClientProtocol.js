@@ -36,7 +36,7 @@ var WeakMap = (typeof window !== "undefined" && window.WeakMap) || require('weak
 var PRIVATE = new WeakMap();
 
 /**
- * @memberof sync-protocols.TimelineSynchronisation
+ * @memberof dvbcss-protocols.TimelineSynchronisation
  * @class
  * @description Implementation of the client part of the timeline synchroniation protocol as defined in DVB CSS.
    With start() the protocol is initiated. The CorrelatedClock object passed into the constructor is updated with ControlTimestamps

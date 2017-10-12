@@ -15,7 +15,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols
+ * @memberof dvbcss-protocols
  * @namespace SocketAdaptors
  * @description
  * <p><em>It is unlikely that you will need to use anything in this namespace directly

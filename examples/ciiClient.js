@@ -16,9 +16,9 @@
 *****************************************************************************/
 
 var WebSocket = require('ws');
-var SyncProtocols = require("..");
-var createClient = SyncProtocols.CII.createCIIClient;
-var CIIMessage = SyncProtocols.CII.CIIMessage;
+var Protocols = require("..");
+var createClient = Protocols.CII.createCIIClient;
+var CIIMessage = Protocols.CII.CIIMessage;
 
 
 var program = require("commander");

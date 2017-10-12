@@ -25,7 +25,7 @@ Math.trunc = Math.trunc || function(x) {
 }
 
 /**
- * @memberof sync-protocols.WallClock
+ * @memberof dvbcss-protocols.WallClock
  * @description
  * BinarySerialiser message serialiser/deserialiser for Wall Clock protocol messages.
  * The binary format is that defined in ETSI TS 103 286-2 clause 8

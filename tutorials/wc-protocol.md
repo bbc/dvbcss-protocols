@@ -1,5 +1,5 @@
 **This is only an introduction to the CSS-WC "Wall Clock" protocol.**
- * **See the [docs for the WallClock namespace]{@link sync-protocols.WallClock} to understand
+ * **See the [docs for the WallClock namespace]{@link dvbcss-protocols.WallClock} to understand
    how to write client or server code using this library.**
  * **See clause 8 of the [DVB CSS specification](http://www.etsi.org/standards-search?search=103+286&page=1&title=1&keywords=1&ed=1&sortby=1) for full detailed semantics of the protocol.**
  * **See clause 13 of the [HbbTV 2 specification](http://hbbtv.org/resource-library/) to
@@ -79,12 +79,12 @@ requests.
 
 #### Binary serialisation of messages
 
-This is implemented in `sync-protocols.WallClock.BinarySerialiser` and is
+This is implemented in `dvbcss-protocols.WallClock.BinarySerialiser` and is
 the serialisation support by HbbTV 2 TVs via UDP.
 
 #### JSON serialisation of messages
 
-This is implemented in `sync-protocols.WallClock.JsonSerialiser`.
+This is implemented in `dvbcss-protocols.WallClock.JsonSerialiser`.
 
 The protocol message format carries the same fields as the DVB CSS wall clock
 protocol, however instead of encoding them in a binary structure, they are

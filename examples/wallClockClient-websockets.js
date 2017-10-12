@@ -16,9 +16,9 @@
 *****************************************************************************/
 
 var WebSocket = require('ws');
-var SyncProtocols = require("..");
+var Protocols = require("..");
 var clocks = require("dvbcss-clocks");
-var createClient = SyncProtocols.WallClock.createBinaryWebSocketClient;
+var createClient = Protocols.WallClock.createBinaryWebSocketClient;
 
 var program = require("commander");
 var URL = 'ws://127.0.0.1:6677/';

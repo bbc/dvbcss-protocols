@@ -18,7 +18,7 @@ var WebSocketAdaptor = require("../SocketAdaptors/WebSocketAdaptor");
 var TSClientProtocol = require("./TSClientProtocol");
 
 /**
- * @memberof sync-protocols.TimelineSynchronisation
+ * @memberof dvbcss-protocols.TimelineSynchronisation
  * @description
  * Factory function that creates a TS protocol client that uses a WebSocket
  * and sends/receives protocol messages in JSON format.
@@ -30,7 +30,7 @@ var TSClientProtocol = require("./TSClientProtocol");
  * @param {string} clientOptions.timelineSelector The Timeline Selector describes the type and location of timeline signalling to be derived from the Timed Content
 currently being presented by the TV Device
  * @param {Number} clientOptions.tickrate The tickrate of the timeline that is specified by the timelineSelector.
- * @returns {sync-protocols.SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client
+ * @returns {dvbcss-protocols.SocketAdaptors.WebSocketAdaptor} The WebSocket adaptor wrapping the whole client
  */
 var createTSClient = function(webSocket, syncTLClock, clientOptions) {
     return new WebSocketAdaptor(

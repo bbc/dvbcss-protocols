@@ -20,7 +20,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols.TimelineSynchronisation
+ * @memberof dvbcss-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing the setup message for the timeline synchronistation protocol that is sent from the client to the server initially. See ETSI TS XXX

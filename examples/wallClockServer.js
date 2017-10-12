@@ -16,9 +16,9 @@
 *****************************************************************************/
 
 var dgram = require("dgram");
-var SyncProtocols = require("..");
+var Protocols = require("..");
 var clocks = require("dvbcss-clocks");
-var createServer = SyncProtocols.WallClock.createBinaryUdpServer; 
+var createServer = Protocols.WallClock.createBinaryUdpServer; 
 
 var program = require("commander");
 var BIND_HOST = '0.0.0.0';

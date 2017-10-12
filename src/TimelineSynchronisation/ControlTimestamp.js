@@ -20,7 +20,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols.TimelineSynchronisation
+ * @memberof dvbcss-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing a control timestamp to correlate media timelines with wall clock times.

@@ -35,14 +35,14 @@ module.exports = function(grunt) {
       lib_browser: {
         context: __dirname + "/build/lib",
         entry: {
-          'sync-protocols' :
+          'dvbcss-protocols' :
             ['./main_browser.js']
         },
         output: {
           path: __dirname + "/dist/browser",
           filename: "[name].js",
           chunkFilename: "chunk-[name]-[chunkhash].js",
-          library: 'sync-protocols',
+          library: 'dvbcss-protocols',
           libraryTarget: 'umd'
         },
         module: {
@@ -54,14 +54,14 @@ module.exports = function(grunt) {
       lib_node: {
         context: __dirname + "/build/lib",
         entry: {
-          'sync-protocols' :
+          'dvbcss-protocols' :
             ['./main_node.js']
         },
         output: {
           path: __dirname + "/dist/node",
           filename: "[name].js",
           chunkFilename: "chunk-[name]-[chunkhash].js",
-          library: 'sync-protocols',
+          library: 'dvbcss-protocols',
           libraryTarget: 'umd'
         },
         module: {

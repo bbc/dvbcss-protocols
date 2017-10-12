@@ -17,10 +17,10 @@
 
 var dgram = require("dgram");
 var WebSocket = require('ws');
-var SyncProtocols = require("..");
+var Protocols = require("..");
 var clocks = require("dvbcss-clocks");
-var createWcClient = SyncProtocols.WallClock.createBinaryUdpClient;
-var createTsClient = SyncProtocols.TimelineSynchronisation.createTSClient;
+var createWcClient = Protocols.WallClock.createBinaryUdpClient;
+var createTsClient = Protocols.TimelineSynchronisation.createTSClient;
 
 var program = require("commander");
 var TS_URL;

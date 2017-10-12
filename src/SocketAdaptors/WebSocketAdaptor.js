@@ -15,7 +15,7 @@
 *****************************************************************************/
 
 /**
- * @memberof sync-protocols.SocketAdaptors
+ * @memberof dvbcss-protocols.SocketAdaptors
  * @class
  * @description
  * Adaptor that manages a websocket connection and interfaces it to a protocol handler.

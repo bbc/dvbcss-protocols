@@ -22,7 +22,7 @@
 var PresentationTimestamp = require("./PresentationTimestamp");
 
 /**
- * @memberof sync-protocols.TimelineSynchronisation
+ * @memberof dvbcss-protocols.TimelineSynchronisation
  * @class
  * @description
  * Object representing actual, earliest and latest presentation timestamps sent from a synchronistion client to the MSAS.

@@ -16,7 +16,7 @@
 
 
 /**
- * @memberof sync-protocols.CII
+ * @memberof dvbcss-protocols.CII
  * @class
  * @description
  * Object representing properties for an available timeline signalled in a CII message.
