@@ -69,7 +69,7 @@ Unit tests are written using the jasmine unit test framework.
     $ grunt test
 
 
-## Simple example
+## Simple example
 
 Creating a wall clock client using JSON format messages via a WebSocket
 connection:
