@@ -1,5 +1,10 @@
 # JS sync protocols library for companion synchronisation
 
+[![npm
+version](https://badge.fury.io/js/dvbcss-protocols.svg)](https://badge.fury.io/js/dvbcss-protocols)
+[![Build status](https://travis-ci.org/bbc/dvbcss-protocols.svg?branch=master)](https://travis-ci.org/bbc/dvbcss-protocols)
+[![API Doc](https://doclets.io/bbc/dvbcss-protocols/master.svg)](https://doclets.io/bbc/dvbcss-protocols/master)
+
 dvbcss-protocols is a javascript library implementing client and server protocols
 for synchronisation between TVs and companion screen applications using the protocols
 specified by [DVB CSS](http://www.etsi.org/standards-search?search=103+286&page=1&title=1&keywords=1&ed=1&sortby=1)
