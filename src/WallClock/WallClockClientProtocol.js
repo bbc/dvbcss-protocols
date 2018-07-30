@@ -115,6 +115,7 @@ WallClockClientProtocol.prototype.stop = function() {
     }
 
     priv.started = false;
+    priv.wallClock.setAvailabilityFlag(false);
 }
 
 /**
