@@ -46,9 +46,13 @@ module.exports = function(grunt) {
           libraryTarget: 'umd'
         },
         module: {
-          loaders: []
         },
-        resolve: { root: __dirname + "/build/lib" },
+        resolve: { 
+            modules: [
+                __dirname + "/build/lib",
+                "node_modules"
+            ]
+        },
       },
       
       lib_node: {
@@ -65,9 +69,13 @@ module.exports = function(grunt) {
           libraryTarget: 'umd'
         },
         module: {
-          loaders: []
         },
-        resolve: { root: __dirname + "/build/lib" },
+        resolve: { 
+            modules: [
+                __dirname + "/build/lib",
+                "node_modules"
+            ]
+        },
       },
       
       specs: {
@@ -81,11 +89,15 @@ module.exports = function(grunt) {
           chunkFilename: "chunk-[name]-[chunkhash].js"
         },
         module: {
-          loaders: []
         },
-        resolve: {
-          root: [ __dirname + "/tests/specs", __dirname + "/tests/util",  __dirname+"/build/lib" ]
-        }
+        resolve: { 
+            modules: [
+                __dirname + "/tests/specs",
+                __dirname + "/tests/util",
+                __dirname+"/build/lib",
+                "node_modules"
+            ]
+        },
       }
     },
     
