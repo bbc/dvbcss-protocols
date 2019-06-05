@@ -47,7 +47,7 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 //          //console.log(evt);
 
             var msg;
-            if (evt.binary) {
+            if (evt.binary || typeof evt.data != "string") {
                 msg = new Uint8Array(evt.data).buffer;
             } else {
                 msg = evt.data;

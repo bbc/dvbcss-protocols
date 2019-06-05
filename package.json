@@ -50,6 +50,6 @@
     "js-object-clone": "^0.4.2",
     "reconnectingwebsocket": "^1.0.0",
     "weak-map": "^1.0.5",
-    "ws": "^1.1.1"
+    "ws": "^3.3.1"
   }
 }
