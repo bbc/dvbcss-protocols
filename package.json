@@ -1,6 +1,6 @@
 {
   "name": "dvbcss-protocols",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Javascript library implementing client and server code for DVB CSS sync protocols",
   "browser": "src/main_browser.js",
   "main": "src/main_node.js",
