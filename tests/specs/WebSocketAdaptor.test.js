@@ -42,14 +42,25 @@ var MockProtocol = function() {
 
 inherits(MockProtocol, EventEmitter);
 
+var ThrowingMockProtocol = function() {
+    EventEmitter.call(this);
+
+    this.start = jasmine.createSpy("start");
+    this.stop = jasmine.createSpy("stop");
+    this.handleMessage = jasmine.createSpy("handleMessage", function() { throw new Error('mock error in message handler'); }).and.callThrough();
+}
+
+inherits(ThrowingMockProtocol, EventEmitter);
+
 
 describe("WebSocketAdaptor", function() {
     var ws = new MockWebSocket();
-    var protocol;
+    var protocol, throwingProtocol;
     
     beforeEach(function() {
         ws = new MockWebSocket("ws://127.0.0.1");
         protocol = new MockProtocol();
+        throwingProtocol = new ThrowingMockProtocol();
     });
     
     
@@ -159,5 +170,16 @@ describe("WebSocketAdaptor", function() {
         protocol.stop.calls.reset();
         ws.triggerEvent("close", {});
         expect(protocol.stop).not.toHaveBeenCalled();
+    });
+
+    it("catches error in the protocol message handler", function() {
+      var payload = "foobar";
+
+      ws.readyState = ws.OPEN;
+      var wsa = new WebSocketAdaptor(throwingProtocol, ws);
+
+      var event ={ data:payload, origin:ws.url };
+      expect(function() { ws.triggerEvent("message", event); }).not.toThrow();
+      expect(throwingProtocol.handleMessage).toHaveBeenCalledWith(payload,null);
     });
 });

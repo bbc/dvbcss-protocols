@@ -47,14 +47,19 @@ var WebSocketAdaptor = function(protocolHandler, webSocket) {
 //          //console.log(evt);
 
             var msg;
-            if (evt.binary || typeof evt.data != "string") {
-                msg = new Uint8Array(evt.data).buffer;
-            } else {
-                msg = evt.data;
-            }
 
-            protocolHandler.handleMessage(msg, null); // no routing information
-        }.bind(this)
+            try {
+              if (evt.binary || typeof evt.data != "string") {
+                  msg = new Uint8Array(evt.data).buffer;
+              } else {
+                  msg = evt.data;
+              }
+
+              protocolHandler.handleMessage(msg, null); // no routing information
+            } catch (error) {
+              webSocket.close();
+            }
+          }.bind(this)
     }
 
     webSocket.addEventListener("open",    handlers.open);
