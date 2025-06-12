@@ -62,7 +62,7 @@ Use the `--help` option to determine the command line options for each example.
 
 JSDoc documentation can be built:
 
-    $ grunt doc
+    $ grunt jsdoc
 
 Documentation is generated and output as HTML into the `doc` subfolder.
 
